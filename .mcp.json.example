@@ -1,10 +1,17 @@
 {
   "mcpServers": {
-    "klaviyo": {
+    "klaviyo-thesis": {
       "command": "npx",
       "args": ["-y", "@anthropic-ai/mcp-server-klaviyo"],
       "env": {
-        "KLAVIYO_API_KEY": "[FILL IN: your Klaviyo private API key]"
+        "KLAVIYO_API_KEY": "${KLAVIYO_API_KEY_THESIS}"
+      }
+    },
+    "klaviyo-stasis": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-klaviyo"],
+      "env": {
+        "KLAVIYO_API_KEY": "${KLAVIYO_API_KEY_STASIS}"
       }
     },
     "warehouse": {
