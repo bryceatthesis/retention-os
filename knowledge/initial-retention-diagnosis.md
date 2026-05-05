@@ -11,6 +11,83 @@ Shopify, Hightouch/warehouse, and `knowledge/data-sources.md`.
 
 ---
 
+## Progress Check — May 5, 2026 (First Day In-Seat)
+
+*~6 weeks after the original audit. Data pulled live from Klaviyo API.*
+
+### Headline
+
+The agency (Antidote) has been active on **segments and campaigns**. The flow architecture issues from the audit are **largely untouched** — and have gotten worse in two places (more Hormesis Transition variants, more draft clutter).
+
+| Area | Movement |
+|---|---|
+| Campaign calendar | ✅ Resumed April 1 after going dark Feb–March |
+| SMS sends | ✅ Restarted April 9 (still 100% blast — no lifecycle SMS) |
+| Segments | ✅ +39 new Antidote segments (lead engagement + suppression framework) |
+| Devotion Cold Outreach (1.2% unsub flag) | ✅ Moved live → draft |
+| Hormesis Transition variant cleanup | ❌ Got worse — 6 live variants now (was 3) |
+| Dead metric cleanup | ❌ 1 of 12 deleted; account now at 215 metrics (was 199/200) |
+| [DRAINING] / Updated / Rebrand draft cleanup | ❌ All 17+ still in account |
+| Missing flows (dunning, cross-sell, anniversary, OTP→Sub, loyalty tier, post-winback, lifecycle SMS) | ❌ None built |
+
+### What moved
+
+**Campaign calendar**: 13 emails sent April 1 → May 3. Mix of education/brand (Peak Performance, Neuro-Stabilizer Strategy, Earth Day, Mental Performance Gap), winback (4.21 Winback Offer + 4.23 Final Call), and customer-facing (60-Day Transformation, Thesis Results). Pace ~2–3 sends/week — genuine improvement.
+
+**SMS restarted**: 7 sends April 9 → May 1, all paired with email campaigns. Still 100% promotional blast — zero lifecycle SMS flows.
+
+**Antidote segment build-out**: 39 new segments tagged `[antidote]`. Tiered lead engagement at 7/14/21/30/60/90/120-day (Lead and SMS variants). New suppression tiers: `EX: Negative Engagement`, `EX: Too Many Emails`, `EX: Unengaged L30D`. New winback tiers: 90/120 Day Engaged Winbacks. Also: `Active Recharge Subscribers [antidote]`, `All Time Purchasers [antidote]`, `Eli Health Cortisol Test Purchasers` (Stasis cortisol test launch), `120 Day Clarity Abandoners` (first product-specific lapsed-customer segment).
+
+**New lead acquisition flows** (live Mar 12): `50% Off_Leads | Browse Abandonment` and `50% OFF_Leads | Abandoned Checkout`.
+
+**Lead Hightouch flows paused** (Apr 27): `Leads | Hightouch - AID` and its SMS counterpart moved live → draft. The 5.2M-recipient/12mo flow is now dormant. Confirm intentional.
+
+**New utility metrics added**: Coupon Used/Assigned (Apr 21–22), Skipped Send (Apr 1), Hosted Page Viewed via Zaymo (Apr 21), Subscribed to Newsletter (Mar 26), Okendo Loyalty Store Credit Awarded (May 5).
+
+### What didn't move
+
+**Hormesis Transition variants — got worse**: Was 3 simultaneous live variants in March. Now 6:
+- 01.24.2026 - Motivation Free
+- 02.18.2026 - Clarity Free
+- 03.04.2026 - Clarity
+- 03.16.2026 - Clarity
+- 04.16.2026 - Clarity *(new since audit)*
+- 04.16.2026 - Clarity Free *(new since audit)*
+
+Each migration cohort is getting its own dated flow rather than one parameterized flow. Cleanup debt is compounding.
+
+**Dead metric cleanup — 1 of 12 deleted**: The "a" test metric (`W6v4LX`) was deleted. All other 11 flagged metrics still exist. Account is now at 215 metrics (limit may have moved or gone unenforced).
+
+**Draft/draining flow pile-up**: 47 draft, 36 live, 6 manual today (audit was ~38 live / ~40 draft). Net: more drafts, fewer live — but all 7 `[DRAINING]` flows, all 7 `Updated |` replacements, and all 3 `Rebrand |` orphans are still sitting there.
+
+**Every missing flow from the audit is still missing.** One nuance: ReCharge handles dunning natively — verify whether the "dunning gap" is actually a gap or an intentional split between ReCharge (payment retry) and Klaviyo (recovery messaging).
+
+**Segment gaps still open**:
+- No subscription tenure segments (new vs. 3mo+ vs. 6mo+)
+- No LTV/spend-tier segmentation
+- No Stasis-specific subscriber segment (only L30 purchasers exists)
+- Product-specific segments limited to `120 Day Clarity Abandoners` — no Motivation/Stress Reset/Neuroprotection equivalents
+
+**Winback flow unchanged**: Standard winback flow `WEFcjQ` (45.7K recip, 48% open, 0.9% click, 0.21% conv) not modified since the audit. Two campaign-level sends ran in late April (4.21 + 4.23) but the flow itself is untouched.
+
+**M1 Onboarding unchanged**: Flow `TezDRv` not modified since the audit.
+
+**Refill Reminders - Hormesis (crown jewel)**: Last updated 2026-04-16. Worth confirming what changed.
+
+### Implications for week 1 triage
+
+Three buckets:
+
+1. **Validate and inherit what's in motion** — Antidote's engagement segment framework, campaign cadence, SMS resumption. Check whether the new winback/SMS segments are wired into flows or just sitting unused.
+
+2. **Stop the active decay** — Hormesis Transition variant sprawl (6 live flows) and draft pile-up are accumulating debt. One consolidation pass on refill variants is the highest-leverage hygiene win.
+
+3. **Sequence the missing strategic work** — every "missing flow" is still missing. Lifecycle SMS post-purchase and OTP→Sub conversion have the clearest revenue case. These need a build sequence and an owner.
+
+Conspicuously absent from any progress: movement on the **structural churn floor** (~5K cancellations/month) or **campaign click-rate gap** (0.2–0.8% vs. 2–3% benchmark). Those aren't fixable inside Klaviyo alone — they need cross-functional ownership, which is the role.
+
+---
+
 ## Executive Summary
 
 | Theme | Historical evidence | Implication |
