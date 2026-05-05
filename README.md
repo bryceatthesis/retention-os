@@ -21,6 +21,10 @@ knowledge/
   okrs-and-targets.md          # Current quarter targets
   data-sources.md              # Source-of-truth map
   flow-inventory.md            # Live Klaviyo flow catalog
+  company-context.md           # Hiring/onboarding company context
+  people-map.md                # Early stakeholder map
+  onboarding-context.md        # First-month onboarding context
+  initial-retention-diagnosis.md # Historical Klaviyo + retention audit
 playbooks/
   churn-investigation.md       # Churn RCA playbook
   lifecycle-audit.md           # Flow audit checklist
@@ -33,6 +37,7 @@ experiments/
   settings.json                # Tool permissions
   skills/                      # Slash commands
   agents/                      # Research subagents
+private/                       # Ignored local sensitive context
 ```
 
 ## Getting started
@@ -48,6 +53,7 @@ experiments/
 - New metric → add a row to `knowledge/metrics-definitions.md` with the exact formula, source, and owner.
 - New segment → follow `playbooks/new-segment-launch.md`, then add to `knowledge/segments.md`.
 - New Klaviyo flow → add a row to `knowledge/flow-inventory.md`.
+- New historical/intake context → summarize durable operating facts in `knowledge/`; keep raw sensitive notes in ignored `private/`.
 
 ### Adding playbooks
 Create `playbooks/<name>.md` with: **Purpose → Inputs → Steps → Outputs → Anti-patterns**.
@@ -65,5 +71,6 @@ Copy the template from `experiments/README.md` into `experiments/YYYY-QN/<slug>.
 ## Conventions
 - `[FILL IN]` marks values that must be populated before the file is useful.
 - Knowledge files use tables for scanability; prose only for nuance.
+- Historical context must include provenance and a freshness note.
 - Playbooks number every step. No ambiguity about sequence.
 - Experiment write-ups always include a decision and a next-step owner.

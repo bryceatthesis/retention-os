@@ -2,6 +2,7 @@ CLAUDE.local.md
 .mcp.json
 .env
 .env.local
+private/
 .DS_Store
 **/.DS_Store
 *.swp

@@ -29,6 +29,7 @@ This file is the map. Details live in `knowledge/`, `playbooks/`, and `experimen
 3. **Cite sources.** For any definitional claim, cite the `knowledge/` file, the query, or the external source that supports it. Do not assert metrics from memory.
 4. **Flag data recency.** Note the freshness of any data pulled (see `knowledge/data-sources.md`). Flag if querying within 24 h of a large campaign send.
 5. **Audit before modifying flows.** Don't suggest Klaviyo flow changes without referencing `knowledge/flow-inventory.md` and `playbooks/lifecycle-audit.md`.
+6. **Treat hiring-process context as sensitive and historical.** Use `knowledge/company-context.md`, `knowledge/initial-retention-diagnosis.md`, and `knowledge/people-map.md` for planning, but verify facts before acting. If `private/hiring-process-context.md` exists, never quote or commit it.
 
 ---
 
@@ -54,6 +55,9 @@ This file is the map. Details live in `knowledge/`, `playbooks/`, and `experimen
 | What are this quarter's targets? | `knowledge/okrs-and-targets.md` |
 | Where does this data live? | `knowledge/data-sources.md` |
 | What does a term mean? | `knowledge/glossary.md` |
+| What did we learn during hiring/onboarding? | `knowledge/company-context.md` |
+| What was the initial retention/Klaviyo diagnosis? | `knowledge/initial-retention-diagnosis.md` |
+| Who should I talk to? | `knowledge/people-map.md` |
 
 ---
 
@@ -70,3 +74,4 @@ This file is the map. Details live in `knowledge/`, `playbooks/`, and `experimen
 - Don't define a new segment ad hoc — follow `playbooks/new-segment-launch.md`.
 - Don't run a winback campaign without checking eligibility in `playbooks/winback.md`.
 - Don't modify Klaviyo flows in any direction without a prior lifecycle audit.
+- Don't publish raw hiring-process notes, compensation, exit, or internal link context.
