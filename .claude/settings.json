@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(echo:*)",
+      "Bash(jq:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(awk:*)",
+      "Bash(sed:*)",
+      "Bash(cut:*)",
+      "Bash(diff:*)",
+      "Bash(date:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Edit(/.claude/skills/cohort-pull/**)",
+      "Edit(/.claude/skills/weekly-retention-digest/**)",
+      "Edit(/.claude/skills/churn-rca/**)",
+      "Edit(/.claude/skills/lifecycle-audit/**)",
+      "Edit(/.claude/skills/experiment-writeup/**)"
+    ],
+    "deny": [],
+    "additionalDirectories": [
+      "/Users/bryceradick/.claude/skills"
+    ]
+  }
+}

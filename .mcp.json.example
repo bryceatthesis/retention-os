@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "klaviyo": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-klaviyo"],
+      "env": {
+        "KLAVIYO_API_KEY": "[FILL IN: your Klaviyo private API key]"
+      }
+    },
+    "warehouse": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-bigquery"],
+      "env": {
+        "BIGQUERY_PROJECT_ID": "[FILL IN: GCP project ID]",
+        "BIGQUERY_DATASET": "[FILL IN: dataset name, e.g. thesis_prod]",
+        "GOOGLE_APPLICATION_CREDENTIALS": "[FILL IN: path to service account JSON]"
+      }
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "[FILL IN: xoxb-... bot token]",
+        "SLACK_TEAM_ID": "[FILL IN: workspace team ID]"
+      }
+    },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-notion"],
+      "env": {
+        "NOTION_API_TOKEN": "[FILL IN: secret_... integration token]"
+      }
+    },
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-linear"],
+      "env": {
+        "LINEAR_API_KEY": "[FILL IN: lin_api_... personal API key]"
+      }
+    },
+    "gdrive": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-gdrive"],
+      "env": {
+        "GDRIVE_CREDENTIALS_PATH": "[FILL IN: path to OAuth credentials JSON]",
+        "GDRIVE_TOKEN_PATH": "[FILL IN: path to token cache file]"
+      }
+    }
+  }
+}

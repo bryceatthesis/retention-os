@@ -1,0 +1,8 @@
+CLAUDE.local.md
+.mcp.json
+.env
+.env.local
+.DS_Store
+**/.DS_Store
+*.swp
+*.swo
