@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "brand": "stasis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "segments": [
+    { "id": "fix_seg_s_engaged", "name": "Engaged 30d", "profile_count": 28120, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "opened OR clicked email in last 30d" },
+    { "id": "fix_seg_s_unengaged", "name": "Unengaged 90d (suppress)", "profile_count": 18420, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "no open/click in last 90d AND not transactional — currently NOT suppressed by Sunset Flow [antidote]" },
+    { "id": "fix_seg_s_active_subs", "name": "Active subscribers", "profile_count": 14820, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "active ReCharge subscription status" },
+    { "id": "fix_seg_s_kids_subs", "name": "Active Kids subscribers", "profile_count": 2410, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "active subscription with Kids product" }
+  ]
+}

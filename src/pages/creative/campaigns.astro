@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import RefillCaveat from '../../components/RefillCaveat.astro';
+import CreativePreview from '../../components/CreativePreview.astro';
+import { loadAllBrands, type Brand } from '../../lib/data';
+import { isoToDate, isWithin48h, int, pct, usd } from '../../lib/format';
+
+const data = loadAllBrands();
+const allCampaigns = (['thesis', 'stasis'] as Brand[]).flatMap((brand) =>
+  data[brand].campaigns.campaigns.map((c) => ({ ...c, brand })),
+);
+allCampaigns.sort((a, b) => (b.send_time ?? '').localeCompare(a.send_time ?? ''));
+---
+<Base title="Campaigns" active="campaigns">
+  <div class="section-title">
+    <h1>Sent campaigns — last 90 days</h1>
+    <span class="muted">{allCampaigns.length} campaigns across both brands</span>
+  </div>
+
+  <RefillCaveat />
+
+  <div class="filters">
+    <input type="search" id="search" placeholder="Filter by name, subject, preheader…" />
+    <select id="channel">
+      <option value="">All channels</option>
+      <option value="email">Email</option>
+      <option value="sms">SMS</option>
+    </select>
+    <select id="hasrev">
+      <option value="">Any revenue</option>
+      <option value="yes">Has attributed revenue</option>
+      <option value="no">No attributed revenue</option>
+    </select>
+    <button type="button" id="reset">Reset</button>
+  </div>
+
+  <div style="overflow-x: auto;">
+    <table id="campaigns-table">
+      <thead>
+        <tr>
+          <th>Send date</th>
+          <th>Brand</th>
+          <th>Channel</th>
+          <th>Creative</th>
+          <th style="text-align:right">Recipients</th>
+          <th style="text-align:right">Open</th>
+          <th style="text-align:right">Click</th>
+          <th style="text-align:right">Unsub</th>
+          <th style="text-align:right">Bounce</th>
+          <th style="text-align:right" title="Klaviyo attributed (Placed Order, 5-day window)">
+            Attrib. revenue ⚠
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {allCampaigns.map((c) => {
+          const settling = isWithin48h(c.send_time);
+          return (
+            <tr
+              data-brand={c.brand}
+              data-channel={c.channel}
+              data-hasrev={c.stats.conversion_value && c.stats.conversion_value > 0 ? 'yes' : 'no'}
+              data-search={[c.name, c.subject ?? '', c.preheader ?? ''].join(' ').toLowerCase()}
+            >
+              <td>
+                <div title={c.send_time ?? ''}>{isoToDate(c.send_time)}</div>
+                {settling && (
+                  <div class="muted" style="font-size: 11px;">
+                    Stats may not have settled — see knowledge/theo-klaviyo-audits.md.
+                  </div>
+                )}
+              </td>
+              <td><span class="tag" style={`text-transform: capitalize;`}>{c.brand}</span></td>
+              <td>{c.channel}</td>
+              <td>
+                <CreativePreview
+                  id={`${c.brand}-${c.id}`}
+                  subject={c.subject}
+                  preheader={c.preheader}
+                  channel={c.channel}
+                  templateId={c.template_id}
+                  htmlPath={c.template_html_path ? `${c.brand}/${c.template_html_path}` : null}
+                  thumbPath={c.template_thumb_path ? `${c.brand}/${c.template_thumb_path}` : null}
+                />
+                <div class="muted" style="font-size: 11px; margin-top: 4px;">{c.name}</div>
+              </td>
+              <td style="text-align:right">{int(c.stats.recipients)}</td>
+              <td style="text-align:right">{pct(c.stats.open_rate, 1)}</td>
+              <td style="text-align:right">{pct(c.stats.click_rate, 2)}</td>
+              <td style="text-align:right">{pct(c.stats.unsub_rate, 2)}</td>
+              <td style="text-align:right">{pct(c.stats.bounce_rate, 2)}</td>
+              <td style="text-align:right">{usd(c.stats.conversion_value)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</Base>
+
+<script>
+  // Plain-DOM filter on the rendered table — keeps the page static.
+  const search = document.getElementById('search') as HTMLInputElement | null;
+  const channel = document.getElementById('channel') as HTMLSelectElement | null;
+  const hasrev = document.getElementById('hasrev') as HTMLSelectElement | null;
+  const reset = document.getElementById('reset') as HTMLButtonElement | null;
+  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>('#campaigns-table tbody tr'));
+
+  function applyFilters() {
+    const s = (search?.value ?? '').toLowerCase().trim();
+    const ch = channel?.value ?? '';
+    const hr = hasrev?.value ?? '';
+    const activeBrand = document.body.dataset.activeBrand ?? 'thesis';
+    for (const tr of rows) {
+      const matchSearch = !s || tr.dataset.search?.includes(s);
+      const matchChannel = !ch || tr.dataset.channel === ch;
+      const matchRev = !hr || tr.dataset.hasrev === hr;
+      const matchBrand = activeBrand === 'both' || tr.dataset.brand === activeBrand;
+      tr.style.display = matchSearch && matchChannel && matchRev && matchBrand ? '' : 'none';
+    }
+  }
+
+  search?.addEventListener('input', applyFilters);
+  channel?.addEventListener('change', applyFilters);
+  hasrev?.addEventListener('change', applyFilters);
+  reset?.addEventListener('click', () => {
+    if (search) search.value = '';
+    if (channel) channel.value = '';
+    if (hasrev) hasrev.value = '';
+    applyFilters();
+  });
+  document.addEventListener('lcc:brand-change', applyFilters);
+  applyFilters();
+</script>

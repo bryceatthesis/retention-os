@@ -1,0 +1,113 @@
+name: Refresh data + deploy
+
+# Two triggers:
+#   - cron at 06:00 PT (13:00 UTC)
+#   - manual workflow_dispatch with `fresh_fetch` input
+#
+# Steps:
+#   1. preflight (verifies both Klaviyo keys; aborts on missing scope or shared org_id)
+#   2. fetch (writes data/<brand>/*.json + template HTML/PNG)
+#   3. commit + push if data/ changed (`build-on-push.yml` then handles deploy)
+#
+# This workflow does NOT build/deploy directly. Pushing the data commit
+# back to main triggers `build-on-push.yml`, which keeps the build step
+# in one place and means markdown-only commits also get a build.
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+    inputs:
+      fresh_fetch:
+        description: 'Re-fetch from Klaviyo (uncheck to just rebuild from existing data/)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Puppeteer Chrome
+        run: pnpm exec puppeteer browsers install chrome
+
+      - name: Skip fetch?
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.fresh_fetch }}" = "false" ]; then
+            echo "Skipping fetch by user choice."
+            echo "should_fetch=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_fetch=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run preflight + fetch
+        if: steps.gate.outputs.should_fetch == 'true'
+        env:
+          KLAVIYO_API_KEY_THESIS: ${{ secrets.KLAVIYO_API_KEY_THESIS }}
+          KLAVIYO_API_KEY_STASIS: ${{ secrets.KLAVIYO_API_KEY_STASIS }}
+          KLAVIYO_API_REVISION: ${{ vars.KLAVIYO_API_REVISION || '2024-10-15' }}
+          RECHARGE_API_KEY_THESIS: ${{ secrets.RECHARGE_API_KEY_THESIS }}
+          RECHARGE_API_KEY_STASIS: ${{ secrets.RECHARGE_API_KEY_STASIS }}
+        run: pnpm fetch:data | tee fetch.log
+
+      - name: Surface preflight on workflow summary
+        if: always()
+        run: |
+          {
+            echo "## Refresh log"
+            echo ""
+            echo "fresh_fetch: ${{ steps.gate.outputs.should_fetch }}"
+            echo ""
+            if [ -f fetch.log ]; then
+              echo '```'
+              tail -n 80 fetch.log
+              echo '```'
+            fi
+            if [ -f data/_meta.json ]; then
+              echo "### data/_meta.json"
+              echo '```json'
+              cat data/_meta.json
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit refreshed data
+        if: steps.gate.outputs.should_fetch == 'true'
+        run: |
+          git config user.name "lcc-refresh-bot"
+          git config user.email "lcc-refresh-bot@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes to data/ — nothing to commit."
+          else
+            git commit -m "chore(data): refresh $(date -u +%FT%TZ)"
+            git push origin HEAD:${GITHUB_REF#refs/heads/}
+          fi

@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadAllBrands, type Brand } from '../lib/data';
+import { buildMergedInventory } from '../lib/flow-inventory-merge';
+import { loadExperiments } from '../lib/experiments';
+import { isoToDate, relativeDays } from '../lib/format';
+
+const data = loadAllBrands();
+const merged: Record<Brand, ReturnType<typeof buildMergedInventory>> = {
+  thesis: buildMergedInventory('thesis', data.thesis),
+  stasis: buildMergedInventory('stasis', data.stasis),
+};
+const experiments = loadExperiments();
+
+interface CleanupItem {
+  brand: Brand;
+  source: 'drift' | 'draining' | 'broken-flow';
+  title: string;
+  detail: string;
+  link?: string;
+}
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cleanup: CleanupItem[] = [];
+
+for (const brand of ['thesis', 'stasis'] as Brand[]) {
+  const inv = merged[brand];
+  for (const section of inv.sections) {
+    for (const f of section.flows) {
+      if (f.drift) {
+        cleanup.push({
+          brand,
+          source: 'drift',
+          title: f.api.name,
+          detail: `markdown says "${f.drift.markdownValue}", API says "${f.drift.apiValue}".`,
+          link: `${baseUrl}/flow-inventory#${brand}`,
+        });
+      }
+      if (f.markdown?.flowName?.includes('[DRAINING]') || /\bdraining\b/i.test(f.api.status)) {
+        cleanup.push({
+          brand,
+          source: 'draining',
+          title: f.api.name,
+          detail: `Status: ${f.api.status}. Confirm wind-down complete and archive.`,
+          link: `${baseUrl}/flow-inventory#${brand}`,
+        });
+      }
+      if (f.api.status === 'Live' && f.api.action_count === 0) {
+        cleanup.push({
+          brand,
+          source: 'broken-flow',
+          title: f.api.name,
+          detail: 'Live with 0 actions — needs build-out or pause.',
+          link: `${baseUrl}/flow-inventory#${brand}`,
+        });
+      }
+    }
+  }
+}
+---
+<Base title="Projects" active="projects">
+  <h1>Projects</h1>
+  <p class="muted">
+    Live experiments and a derived cleanup queue.
+    Notion integration is reserved for v2 — for now, write-ups live in <code>experiments/{`<quarter>`}/*.md</code> in the repo.
+  </p>
+
+  <div class="section-title">
+    <h2>Active experiments</h2>
+    <span class="muted">{experiments.length} from <code>experiments/</code></span>
+  </div>
+
+  {experiments.length === 0 ? (
+    <p class="panel muted">No experiments tracked yet. Add a markdown file under <code>experiments/{`<quarter>`}/</code>.</p>
+  ) : (
+    <div class="row">
+      {experiments.map((exp) => (
+        <article class="panel" style="flex: 1 1 320px; min-width: 280px;">
+          <div style="display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap;">
+            <span class="badge">{exp.quarter}</span>
+            {exp.status && <span class="badge">{exp.status}</span>}
+            {exp.brand && <span class="badge">{exp.brand}</span>}
+          </div>
+          <h3 style="margin: 8px 0 4px 0;">{exp.title}</h3>
+          <div class="muted" style="font-size: 12px;">
+            {exp.owner ? `Owner: ${exp.owner}` : 'Owner: —'} · Updated {isoToDate(exp.updated)} ({relativeDays(exp.updated)})
+          </div>
+          <p style="font-size: 13px; margin: 8px 0;">{exp.bodyExcerpt}</p>
+          <a href={`https://github.com/bryceatthesis/retention-os/blob/main/${exp.repoRelativePath}`} target="_blank" rel="noopener">View markdown →</a>
+        </article>
+      ))}
+    </div>
+  )}
+
+  <div class="section-title">
+    <h2>Cleanup queue</h2>
+    <span class="muted">{cleanup.length} item{cleanup.length === 1 ? '' : 's'} (auto-derived)</span>
+  </div>
+
+  {cleanup.length === 0 ? (
+    <p class="panel muted">No cleanup items detected. Drift flags and draining flows surface here automatically.</p>
+  ) : (
+    <table>
+      <thead><tr><th>Brand</th><th>Source</th><th>Item</th><th>Detail</th><th></th></tr></thead>
+      <tbody>
+        {cleanup.map((c) => (
+          <tr data-brand={c.brand}>
+            <td><span class="tag" style={`text-transform: capitalize;`}>{c.brand}</span></td>
+            <td><span class="tag tag--warn">{c.source}</span></td>
+            <td>{c.title}</td>
+            <td>{c.detail}</td>
+            <td>{c.link && <a href={c.link}>open</a>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</Base>

@@ -1,0 +1,219 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadAllBrands, type Brand } from '../lib/data';
+import { loadThresholds } from '../lib/thresholds';
+import { isoToDate, int, pct } from '../lib/format';
+
+const data = loadAllBrands();
+const thresholds = loadThresholds();
+
+interface BrokenFlowAlert {
+  brand: Brand;
+  id: string;
+  name: string;
+  status: string;
+  reason: string;
+}
+
+const brokenFlowAlerts: BrokenFlowAlert[] = [];
+for (const brand of ['thesis', 'stasis'] as Brand[]) {
+  for (const flow of data[brand].flows.flows) {
+    if (flow.status === 'Live' && flow.action_count === 0) {
+      brokenFlowAlerts.push({
+        brand,
+        id: flow.id,
+        name: flow.name,
+        status: flow.status,
+        reason: 'Live flow with 0 actions — should be suppressing or sending, but does neither.',
+      });
+    }
+  }
+}
+
+const brandPayload = (brand: Brand) => ({
+  brand,
+  daily: data[brand].deliverability.daily,
+  totals: data[brand].deliverability.totals,
+});
+
+const chartPayload = JSON.stringify({
+  thesis: brandPayload('thesis'),
+  stasis: brandPayload('stasis'),
+  thresholds,
+}).replace(/</g, '\\u003c');
+---
+<Base title="Deliverability" active="deliverability">
+  <h1>Deliverability — last 90 days</h1>
+  <p class="muted">
+    Account-level email rates from Klaviyo's <code>account-values-reports</code> endpoint, daily granularity.
+    Unsub series uses the corrected metric <code>Unsubscribed from Email Marketing</code> per the Theo audit reconciliation.
+  </p>
+
+  {brokenFlowAlerts.length > 0 && (
+    <div class="alert-banner" id="broken-flow-alerts">
+      <h3>⚠ Live flows with 0 actions ({brokenFlowAlerts.length})</h3>
+      <p>These flows are status=Live in Klaviyo but contain no actions, so nothing happens when they trigger. The most common case is a Sunset Flow that should be suppressing unengaged profiles.</p>
+      <ul>
+        {brokenFlowAlerts.map((a) => (
+          <li data-brand={a.brand}>
+            <strong style={`text-transform: capitalize;`}>{a.brand}</strong>: {a.name} (id <code>{a.id}</code>) — {a.reason}
+          </li>
+        ))}
+      </ul>
+      <p style="margin-top: 8px;">
+        Context for the Stasis Sunset Flow case lives in
+        <code>knowledge/klaviyo-renewal-context.md</code> and
+        <code>experiments/2026-Q2/profile-hygiene-audit-2026-05-07.md</code>.
+      </p>
+    </div>
+  )}
+
+  <div class="row" style="margin-bottom: 16px;">
+    {(['thesis', 'stasis'] as Brand[]).map((brand) => {
+      const t = data[brand].deliverability.totals;
+      return (
+        <div class="panel" data-brand={brand} style="flex: 1 1 320px; min-width: 280px;">
+          <h2 style={`margin-top:0; text-transform: capitalize;`}>{brand}</h2>
+          <div class="row" style="gap: 16px;">
+            <div>
+              <div class="muted" style="font-size: 11px;">Bounce</div>
+              <div style="font-weight:600;">{pct(t.bounce_rate, 2)}</div>
+              <div class="muted" style="font-size: 11px;">target &lt; {pct(thresholds.bounceRate.warn, 1)}</div>
+            </div>
+            <div>
+              <div class="muted" style="font-size: 11px;">Spam</div>
+              <div style="font-weight:600;">{pct(t.spam_complaint_rate, 3)}</div>
+              <div class="muted" style="font-size: 11px;">target &lt; {pct(thresholds.spamRate.warn, 2)}</div>
+            </div>
+            <div>
+              <div class="muted" style="font-size: 11px;">Unsub</div>
+              <div style="font-weight:600;">{pct(t.unsub_rate, 2)}</div>
+              <div class="muted" style="font-size: 11px;">target &lt; {pct(thresholds.unsubRate.warn, 1)}</div>
+            </div>
+            <div>
+              <div class="muted" style="font-size: 11px;">Net list growth</div>
+              <div style="font-weight:600;">{int(t.list_growth_net)}</div>
+              <div class="muted" style="font-size: 11px;">+{int(t.list_growth_subscribed)} / −{int(t.list_growth_unsubscribed)}</div>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <h2>90-day trend</h2>
+  <div class="panel">
+    <canvas id="trend-chart" style="max-width: 100%; height: 360px;"></canvas>
+  </div>
+
+  <h2 style="margin-top: 32px;">List &amp; segment inventory</h2>
+  <div class="row">
+    {(['thesis', 'stasis'] as Brand[]).map((brand) => (
+      <div class="panel" data-brand={brand} style="flex: 1 1 360px; min-width: 320px;">
+        <h3 style={`margin-top:0; text-transform: capitalize;`}>{brand}</h3>
+        <div class="muted" style="font-size: 12px; margin-bottom: 4px;">Lists ({data[brand].lists.lists.length})</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th style="text-align:right">Profiles</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data[brand].lists.lists.map((l) => (
+              <tr>
+                <td>{l.name}</td>
+                <td style="text-align:right">{int(l.profile_count)}</td>
+                <td>{isoToDate(l.updated)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div class="muted" style="font-size: 12px; margin: 12px 0 4px;">Segments ({data[brand].segments.segments.length})</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th style="text-align:right">Profiles</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data[brand].segments.segments.map((s) => (
+              <tr>
+                <td>{s.name}</td>
+                <td style="text-align:right">{int(s.profile_count)}</td>
+                <td>{isoToDate(s.updated)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </div>
+</Base>
+
+<script type="application/json" id="lcc-deliverability-payload" set:html={chartPayload}></script>
+
+<script>
+  import { Chart, registerables } from 'chart.js';
+  Chart.register(...registerables);
+
+  const payloadEl = document.getElementById('lcc-deliverability-payload');
+  if (!payloadEl) throw new Error('deliverability payload missing');
+  const payload = JSON.parse(payloadEl.textContent ?? '{}');
+
+  type Day = { date: string; delivered: number; bounced: number; spam_complaints: number; unsubscribes: number };
+
+  function rates(days: Day[]) {
+    return days.map((d) => ({
+      x: d.date,
+      bounce: d.delivered > 0 ? d.bounced / (d.delivered + d.bounced) : null,
+      spam: d.delivered > 0 ? d.spam_complaints / d.delivered : null,
+      unsub: d.delivered > 0 ? d.unsubscribes / d.delivered : null,
+    }));
+  }
+
+  const tCanvas = document.getElementById('trend-chart') as HTMLCanvasElement | null;
+  if (tCanvas) {
+    const tRates = rates(payload.thesis.daily);
+    const sRates = rates(payload.stasis.daily);
+    const labels = tRates.map((r) => r.x.slice(0, 10));
+    const ds = (label: string, data: number[], color: string, dash = false) => ({
+      label,
+      data,
+      borderColor: color,
+      backgroundColor: color,
+      borderDash: dash ? [4, 4] : undefined,
+      borderWidth: 1.5,
+      pointRadius: 0,
+      tension: 0.2,
+    });
+
+    new Chart(tCanvas, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          ds('Thesis bounce', tRates.map((r) => (r.bounce ?? 0) * 100), 'rgb(185, 28, 28)'),
+          ds('Thesis spam', tRates.map((r) => (r.spam ?? 0) * 100), 'rgb(180, 83, 9)'),
+          ds('Thesis unsub', tRates.map((r) => (r.unsub ?? 0) * 100), 'rgb(29, 78, 216)'),
+          ds('Stasis bounce', sRates.map((r) => (r.bounce ?? 0) * 100), 'rgb(185, 28, 28)', true),
+          ds('Stasis spam', sRates.map((r) => (r.spam ?? 0) * 100), 'rgb(180, 83, 9)', true),
+          ds('Stasis unsub', sRates.map((r) => (r.unsub ?? 0) * 100), 'rgb(29, 78, 216)', true),
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          x: { ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } },
+          y: { title: { display: true, text: 'Rate (%)' }, ticks: { callback: (v) => `${(v as number).toFixed(2)}%` } },
+        },
+      },
+    });
+  }
+</script>

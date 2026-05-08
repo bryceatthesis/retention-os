@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "brand": "thesis",
+  "status": "pending_credentials",
+  "checked_at": "2026-05-08T13:00:00.000Z",
+  "notes": "ReCharge credentials not yet provisioned. Subscription-health pages will render a placeholder until creds land.",
+  "org_id": null,
+  "account_name": null
+}

@@ -1,0 +1,177 @@
+---
+import RefreshHeader from '../components/RefreshHeader.astro';
+import BrandToggle from '../components/BrandToggle.astro';
+import { loadMeta } from '../lib/data';
+
+interface Props {
+  title: string;
+  /** Pages can opt out of the Both option (e.g., dense tables). */
+  disableBoth?: boolean;
+  /** Active page key for nav highlighting. */
+  active?: 'home' | 'campaigns' | 'flows' | 'deliverability' | 'flow-inventory' | 'projects';
+}
+
+const { title, disableBoth, active } = Astro.props;
+const meta = loadMeta();
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const navItems: Array<{ key: NonNullable<Props['active']>; label: string; href: string }> = [
+  { key: 'home', label: 'Home', href: `${baseUrl}/` },
+  { key: 'campaigns', label: 'Campaigns', href: `${baseUrl}/creative/campaigns` },
+  { key: 'flows', label: 'Flows', href: `${baseUrl}/creative/flows` },
+  { key: 'deliverability', label: 'Deliverability', href: `${baseUrl}/deliverability` },
+  { key: 'flow-inventory', label: 'Flow Inventory', href: `${baseUrl}/flow-inventory` },
+  { key: 'projects', label: 'Projects', href: `${baseUrl}/projects` },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title} · Lifecycle Command Center</title>
+    <link rel="stylesheet" href={`${baseUrl}/assets/site.css`} />
+  </head>
+  <body data-disable-both={disableBoth ? 'true' : 'false'}>
+    <header class="site-header">
+      <div class="site-header__row">
+        <a class="site-title" href={`${baseUrl}/`}>Lifecycle Command Center</a>
+        <BrandToggle disableBoth={disableBoth ?? false} />
+      </div>
+      <nav class="site-nav">
+        {navItems.map((item) => (
+          <a class:list={['site-nav__link', active === item.key && 'site-nav__link--active']} href={item.href}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+      <RefreshHeader meta={meta} />
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Public site. Klaviyo performance data is intentionally exposed; customer PII is not.
+        Source: <a href="https://github.com/bryceatthesis/retention-os">bryceatthesis/retention-os</a>.
+      </p>
+    </footer>
+    <script src={`${baseUrl}/assets/brand-toggle.js`} defer></script>
+  </body>
+</html>
+<style is:global>
+  :root {
+    --bg: #f8f8f7;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --ink-muted: #595959;
+    --line: #e3e2df;
+    --accent: #1d4ed8;
+    --good: #15803d;
+    --warn: #b45309;
+    --bad: #b91c1c;
+    --pending: #6b7280;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  a { color: var(--accent); }
+  h1, h2, h3 { line-height: 1.2; }
+  .site-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 24px 0;
+  }
+  .site-header__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .site-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .site-nav {
+    display: flex;
+    gap: 16px;
+    padding: 8px 0;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+  }
+  .site-nav__link {
+    text-decoration: none;
+    color: var(--ink-muted);
+    font-size: 14px;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+  }
+  .site-nav__link--active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+  .site-main {
+    padding: 24px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .site-footer {
+    padding: 24px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 12px;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #eef2ff;
+    color: var(--accent);
+  }
+  .badge--good { background: #ecfdf5; color: var(--good); }
+  .badge--warn { background: #fffbeb; color: var(--warn); }
+  .badge--bad { background: #fef2f2; color: var(--bad); }
+  .badge--pending { background: #f3f4f6; color: var(--pending); }
+  table { border-collapse: collapse; width: 100%; }
+  th, td {
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  th { font-weight: 600; color: var(--ink-muted); }
+  tr.alert td { background: #fff7ed; }
+  .brand-only { display: none; }
+  body[data-active-brand="thesis"] .brand-only.brand-thesis { display: block; }
+  body[data-active-brand="stasis"] .brand-only.brand-stasis { display: block; }
+  body[data-active-brand="both"] .brand-only.brand-thesis,
+  body[data-active-brand="both"] .brand-only.brand-stasis { display: block; }
+  body[data-active-brand="thesis"] [data-brand="stasis"]:not(.brand-keep) { display: none; }
+  body[data-active-brand="stasis"] [data-brand="thesis"]:not(.brand-keep) { display: none; }
+</style>

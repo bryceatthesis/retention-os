@@ -1,0 +1,153 @@
+---
+import Base from '../../layouts/Base.astro';
+import RefillCaveat from '../../components/RefillCaveat.astro';
+import CreativePreview from '../../components/CreativePreview.astro';
+import { loadAllBrands, type Brand } from '../../lib/data';
+import { isoToDate, int, pct, usd, relativeDays } from '../../lib/format';
+
+const data = loadAllBrands();
+const allFlows = (['thesis', 'stasis'] as Brand[]).flatMap((brand) =>
+  data[brand].flows.flows.map((f) => ({ ...f, brand })),
+);
+allFlows.sort((a, b) => (b.stats.recipients ?? 0) - (a.stats.recipients ?? 0));
+---
+<Base title="Flows" active="flows">
+  <div class="section-title">
+    <h1>Flow performance — last 30 days</h1>
+    <span class="muted">{allFlows.length} flows across both brands</span>
+  </div>
+
+  <RefillCaveat />
+
+  <div class="filters">
+    <input type="search" id="search" placeholder="Filter by flow name…" />
+    <select id="status">
+      <option value="">All statuses</option>
+      <option value="Live">Live</option>
+      <option value="Draft">Draft</option>
+      <option value="Manual">Manual</option>
+      <option value="Draining">Draining</option>
+    </select>
+    <button type="button" id="reset">Reset</button>
+  </div>
+
+  <div style="overflow-x: auto;">
+    <table id="flows-table">
+      <thead>
+        <tr>
+          <th>Flow</th>
+          <th>Brand</th>
+          <th>Status</th>
+          <th>Trigger</th>
+          <th style="text-align:right">Actions</th>
+          <th>Last edited</th>
+          <th style="text-align:right">Recipients</th>
+          <th style="text-align:right">Open</th>
+          <th style="text-align:right">Click</th>
+          <th style="text-align:right">Unsub</th>
+          <th style="text-align:right" title="Klaviyo attributed (Placed Order, 5-day window)">Attrib. revenue ⚠</th>
+        </tr>
+      </thead>
+      <tbody>
+        {allFlows.map((f) => (
+          <>
+            <tr
+              class="flow-row"
+              data-flow-id={`${f.brand}-${f.id}`}
+              data-brand={f.brand}
+              data-status={f.status}
+              data-search={f.name.toLowerCase()}
+            >
+              <td>
+                <button type="button" class="expand-btn" data-expand={`${f.brand}-${f.id}`} aria-expanded="false" style="background:none; border:none; cursor:pointer; font-weight:600; padding:0; text-align: left;">
+                  ▸ {f.name}
+                </button>
+                <div class="muted" style="font-size: 11px;">id {f.id}</div>
+              </td>
+              <td><span class="tag" style={`text-transform: capitalize;`}>{f.brand}</span></td>
+              <td>{f.status}</td>
+              <td>{f.trigger_type ?? '—'}</td>
+              <td style="text-align:right">{f.action_count}</td>
+              <td>
+                <div title={f.last_updated ?? ''}>{isoToDate(f.last_updated)}</div>
+                <div class="muted" style="font-size: 11px;">{relativeDays(f.last_updated)}</div>
+              </td>
+              <td style="text-align:right">{int(f.stats.recipients)}</td>
+              <td style="text-align:right">{pct(f.stats.open_rate, 1)}</td>
+              <td style="text-align:right">{pct(f.stats.click_rate, 2)}</td>
+              <td style="text-align:right">{pct(f.stats.unsub_rate, 2)}</td>
+              <td style="text-align:right">{usd(f.stats.conversion_value)}</td>
+            </tr>
+            {f.messages.length > 0 && (
+              <tr class="flow-detail" data-detail-for={`${f.brand}-${f.id}`} style="display: none;">
+                <td colspan="11">
+                  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; padding: 8px;">
+                    {f.messages.map((m) => (
+                      <div class="panel">
+                        <div class="muted" style="font-size: 11px;">{m.name ?? '(message)'}</div>
+                        <CreativePreview
+                          id={`flowmsg-${f.brand}-${f.id}-${m.id}`}
+                          subject={m.subject}
+                          preheader={m.preheader}
+                          channel={m.channel}
+                          templateId={m.template_id}
+                          htmlPath={m.template_html_path ? `${f.brand}/${m.template_html_path}` : null}
+                          thumbPath={m.template_thumb_path ? `${f.brand}/${m.template_thumb_path}` : null}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            )}
+          </>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Base>
+
+<script>
+  const search = document.getElementById('search') as HTMLInputElement | null;
+  const status = document.getElementById('status') as HTMLSelectElement | null;
+  const reset = document.getElementById('reset') as HTMLButtonElement | null;
+  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>('#flows-table tbody tr.flow-row'));
+
+  function applyFilters() {
+    const s = (search?.value ?? '').toLowerCase().trim();
+    const st = status?.value ?? '';
+    const activeBrand = document.body.dataset.activeBrand ?? 'thesis';
+    for (const tr of rows) {
+      const matchSearch = !s || tr.dataset.search?.includes(s);
+      const matchStatus = !st || tr.dataset.status === st;
+      const matchBrand = activeBrand === 'both' || tr.dataset.brand === activeBrand;
+      const visible = matchSearch && matchStatus && matchBrand;
+      tr.style.display = visible ? '' : 'none';
+      const detail = document.querySelector<HTMLTableRowElement>(`tr.flow-detail[data-detail-for="${tr.dataset.flowId}"]`);
+      if (detail && !visible) detail.style.display = 'none';
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement | null;
+    const btn = target?.closest('button.expand-btn');
+    if (!btn) return;
+    const id = (btn as HTMLButtonElement).dataset.expand;
+    const detail = document.querySelector<HTMLTableRowElement>(`tr.flow-detail[data-detail-for="${id}"]`);
+    if (!detail) return;
+    const open = detail.style.display !== 'none';
+    detail.style.display = open ? 'none' : '';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    btn.textContent = `${open ? '▸' : '▾'} ${btn.textContent?.replace(/^[▾▸]\s*/, '')}`;
+  });
+
+  search?.addEventListener('input', applyFilters);
+  status?.addEventListener('change', applyFilters);
+  reset?.addEventListener('click', () => {
+    if (search) search.value = '';
+    if (status) status.value = '';
+    applyFilters();
+  });
+  document.addEventListener('lcc:brand-change', applyFilters);
+  applyFilters();
+</script>

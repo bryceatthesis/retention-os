@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "brand": "stasis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "lists": [
+    { "id": "fix_list_s_marketing", "name": "Marketing — All Subscribers", "profile_count": 82440, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_s_quiz", "name": "Quiz Leads", "profile_count": 18420, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_s_kids_waitlist", "name": "Stasis Kids — Waitlist", "profile_count": 6840, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_s_sms", "name": "SMS Subscribers", "profile_count": 14210, "updated": "2026-05-08T12:00:00.000Z" }
+  ]
+}

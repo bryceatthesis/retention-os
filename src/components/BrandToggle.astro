@@ -1,0 +1,19 @@
+---
+interface Props {
+  disableBoth?: boolean;
+}
+const { disableBoth = false } = Astro.props;
+---
+<div class="brand-toggle" role="group" aria-label="Brand selector">
+  <button type="button" data-brand="thesis" aria-pressed="false">Thesis</button>
+  <button type="button" data-brand="stasis" aria-pressed="false">Stasis</button>
+  <button
+    type="button"
+    data-brand="both"
+    aria-pressed="false"
+    disabled={disableBoth}
+    title={disableBoth ? 'This page is too dense for the Both view — pick a single brand.' : ''}
+  >
+    Both
+  </button>
+</div>

@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "brand": "thesis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "window": { "start": "2026-04-08T13:00:00.000Z", "end": "2026-05-08T13:00:00.000Z" },
+  "flows": [
+    {
+      "id": "TezDRv",
+      "name": "Active | M1 | Onboarding Flow",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 9,
+      "last_updated": "2026-04-22T14:30:00.000Z",
+      "created": "2024-08-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 6240,
+        "delivered": 6188,
+        "opens_unique": 3520,
+        "clicks_unique": 81,
+        "unsubscribe_uniques": 12,
+        "bounced": 52,
+        "conversion_value": 4260,
+        "open_rate": 0.5689,
+        "click_rate": 0.0131,
+        "unsub_rate": 0.0019,
+        "bounce_rate": 0.0083
+      },
+      "messages": [
+        {
+          "id": "fix_msg_t_TezDRv_1",
+          "name": "M1 — Welcome",
+          "channel": "email",
+          "subject": "Welcome to Thesis — let's set you up",
+          "preheader": "What to expect over the next 30 days.",
+          "template_id": "fix_tmpl_t_TezDRv_1",
+          "template_html_path": null,
+          "template_thumb_path": null
+        },
+        {
+          "id": "fix_msg_t_TezDRv_2",
+          "name": "M1 — Day 7 check-in",
+          "channel": "email",
+          "subject": "How's the first week feeling?",
+          "preheader": "A quick check-in (no reply needed).",
+          "template_id": "fix_tmpl_t_TezDRv_2",
+          "template_html_path": null,
+          "template_thumb_path": null
+        }
+      ]
+    },
+    {
+      "id": "Y6nDb2",
+      "name": "Active | M1 | NYNM Mindshift Series",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 6,
+      "last_updated": "2026-01-12T10:00:00.000Z",
+      "created": "2024-12-15T00:00:00.000Z",
+      "stats": {
+        "recipients": 1820,
+        "delivered": 1808,
+        "opens_unique": 1100,
+        "clicks_unique": 41,
+        "unsubscribe_uniques": 4,
+        "bounced": 12,
+        "conversion_value": 920,
+        "open_rate": 0.6084,
+        "click_rate": 0.0227,
+        "unsub_rate": 0.0022,
+        "bounce_rate": 0.0066
+      },
+      "messages": []
+    },
+    {
+      "id": "X7S3Vd",
+      "name": "Active | M2 | Onboarding Flow",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 7,
+      "last_updated": "2026-03-04T16:00:00.000Z",
+      "created": "2024-09-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 4920,
+        "delivered": 4878,
+        "opens_unique": 2320,
+        "clicks_unique": 110,
+        "unsubscribe_uniques": 9,
+        "bounced": 42,
+        "conversion_value": 3180,
+        "open_rate": 0.4756,
+        "click_rate": 0.0226,
+        "unsub_rate": 0.0018,
+        "bounce_rate": 0.0085
+      },
+      "messages": []
+    },
+    {
+      "id": "TcGQ3t",
+      "name": "Active | Refill Reminders - Hormesis",
+      "status": "Live",
+      "trigger_type": "Date",
+      "action_count": 4,
+      "last_updated": "2026-04-30T11:00:00.000Z",
+      "created": "2024-06-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 8240,
+        "delivered": 8190,
+        "opens_unique": 3820,
+        "clicks_unique": 240,
+        "unsubscribe_uniques": 18,
+        "bounced": 50,
+        "conversion_value": 11420,
+        "open_rate": 0.4664,
+        "click_rate": 0.0293,
+        "unsub_rate": 0.0022,
+        "bounce_rate": 0.0061
+      },
+      "messages": []
+    },
+    {
+      "id": "WEFcjQ",
+      "name": "Churned | Winback | Subscription Cancelled | Email",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 5,
+      "last_updated": "2026-02-18T09:00:00.000Z",
+      "created": "2024-04-15T00:00:00.000Z",
+      "stats": {
+        "recipients": 1840,
+        "delivered": 1820,
+        "opens_unique": 720,
+        "clicks_unique": 28,
+        "unsubscribe_uniques": 3,
+        "bounced": 20,
+        "conversion_value": 1180,
+        "open_rate": 0.3956,
+        "click_rate": 0.0154,
+        "unsub_rate": 0.0016,
+        "bounce_rate": 0.0109
+      },
+      "messages": []
+    },
+    {
+      "id": "RkWf7n",
+      "name": "Active | Order Confirmation",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 1,
+      "last_updated": "2025-11-02T00:00:00.000Z",
+      "created": "2023-05-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 5120,
+        "delivered": 5102,
+        "opens_unique": 4108,
+        "clicks_unique": 612,
+        "unsubscribe_uniques": 4,
+        "bounced": 18,
+        "conversion_value": 0,
+        "open_rate": 0.8052,
+        "click_rate": 0.1199,
+        "unsub_rate": 0.0008,
+        "bounce_rate": 0.0035
+      },
+      "messages": []
+    },
+    {
+      "id": "Y8c3BR",
+      "name": "OTP Login",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 1,
+      "last_updated": "2025-09-10T00:00:00.000Z",
+      "created": "2024-02-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 9420,
+        "delivered": 9418,
+        "opens_unique": 8800,
+        "clicks_unique": 7910,
+        "unsubscribe_uniques": 2,
+        "bounced": 2,
+        "conversion_value": 0,
+        "open_rate": 0.9343,
+        "click_rate": 0.84,
+        "unsub_rate": 0.0002,
+        "bounce_rate": 0.0002
+      },
+      "messages": []
+    }
+  ]
+}

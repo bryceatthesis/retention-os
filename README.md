@@ -68,6 +68,26 @@ Create `.claude/skills/<skill-name>/SKILL.md`. Follow the frontmatter convention
 ### Adding experiments
 Copy the template from `experiments/README.md` into `experiments/YYYY-QN/<slug>.md`.
 
+## Lifecycle Command Center (dashboard)
+
+A static Astro site (`src/`, deployed via GitHub Pages) renders Klaviyo
+performance for both brands as a daily-refreshed dashboard. See
+`prompts/lifecycle-command-center.md` for the v1 spec, `data/README.md`
+for the JSON snapshot layout, and `.github/workflows/` for the
+refresh + deploy automation.
+
+```bash
+pnpm install            # one-time
+pnpm dev                # local dev (uses committed data/ fixtures)
+pnpm fetch:preflight    # verify Klaviyo keys against /api/accounts/
+pnpm fetch:data         # full preflight + fetch (writes data/)
+pnpm build              # static build to dist/
+```
+
+Required GitHub Actions secrets: `KLAVIYO_API_KEY_THESIS`,
+`KLAVIYO_API_KEY_STASIS`, plus optional `RECHARGE_API_KEY_THESIS`,
+`RECHARGE_API_KEY_STASIS` when those creds land.
+
 ## Conventions
 - `[FILL IN]` marks values that must be populated before the file is useful.
 - Knowledge files use tables for scanability; prose only for nuance.

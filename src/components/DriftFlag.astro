@@ -1,0 +1,15 @@
+---
+import type { DriftFlag as DriftFlagShape } from '../lib/flow-inventory-merge';
+
+interface Props {
+  drift: DriftFlagShape;
+  /** Brand path so we can deep-link to the markdown file. */
+  brand: 'thesis' | 'stasis';
+}
+const { drift, brand } = Astro.props;
+const editUrl = `https://github.com/bryceatthesis/retention-os/edit/main/knowledge/flow-inventory.md#${brand}`;
+---
+<span class="drift-flag" title={`Drift on ${drift.field}: markdown says "${drift.markdownValue}", API says "${drift.apiValue}".`}>
+  Drift: <strong>md "{drift.markdownValue}"</strong> ≠ <strong>API "{drift.apiValue}"</strong>
+  <a href={editUrl} target="_blank" rel="noopener">edit md →</a>
+</span>

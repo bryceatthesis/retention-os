@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "brand": "stasis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "window": { "start": "2026-04-08T13:00:00.000Z", "end": "2026-05-08T13:00:00.000Z" },
+  "flows": [
+    {
+      "id": "WsitwT",
+      "name": "Subscription Post-Purchase - March 2026 [antidote]",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 8,
+      "last_updated": "2026-04-18T15:30:00.000Z",
+      "created": "2026-03-04T00:00:00.000Z",
+      "stats": {
+        "recipients": 3820,
+        "delivered": 3792,
+        "opens_unique": 2140,
+        "clicks_unique": 78,
+        "unsubscribe_uniques": 6,
+        "bounced": 28,
+        "conversion_value": 1820,
+        "open_rate": 0.5644,
+        "click_rate": 0.0206,
+        "unsub_rate": 0.0016,
+        "bounce_rate": 0.0073
+      },
+      "messages": [
+        {
+          "id": "fix_msg_s_WsitwT_1",
+          "name": "Day 0 — Welcome",
+          "channel": "email",
+          "subject": "You're in — let's set up your routine",
+          "preheader": "What to expect over the next 30 days.",
+          "template_id": "fix_tmpl_s_WsitwT_1",
+          "template_html_path": null,
+          "template_thumb_path": null
+        },
+        {
+          "id": "fix_msg_s_WsitwT_2",
+          "name": "Day 7 — Routine check-in",
+          "channel": "email",
+          "subject": "How's the first week?",
+          "preheader": "Two questions, no reply needed.",
+          "template_id": "fix_tmpl_s_WsitwT_2",
+          "template_html_path": null,
+          "template_thumb_path": null
+        }
+      ]
+    },
+    {
+      "id": "WJWQAM",
+      "name": "post purchase flow - stasis kids [antidote]",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 5,
+      "last_updated": "2026-02-12T12:00:00.000Z",
+      "created": "2025-09-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 1240,
+        "delivered": 1232,
+        "opens_unique": 720,
+        "clicks_unique": 38,
+        "unsubscribe_uniques": 3,
+        "bounced": 8,
+        "conversion_value": 410,
+        "open_rate": 0.5844,
+        "click_rate": 0.0308,
+        "unsub_rate": 0.0024,
+        "bounce_rate": 0.0065
+      },
+      "messages": []
+    },
+    {
+      "id": "X9rNsj",
+      "name": "Upcoming Subscription Reminder - Bundle Refills [UPDATED DEC.2025]",
+      "status": "Live",
+      "trigger_type": "Date",
+      "action_count": 3,
+      "last_updated": "2025-12-22T09:00:00.000Z",
+      "created": "2025-12-22T09:00:00.000Z",
+      "stats": {
+        "recipients": 5820,
+        "delivered": 5790,
+        "opens_unique": 3140,
+        "clicks_unique": 142,
+        "unsubscribe_uniques": 7,
+        "bounced": 30,
+        "conversion_value": 8240,
+        "open_rate": 0.5423,
+        "click_rate": 0.0245,
+        "unsub_rate": 0.0012,
+        "bounce_rate": 0.0052
+      },
+      "messages": []
+    },
+    {
+      "id": "YgVEQB",
+      "name": "Subscription Winback [antidote]",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 6,
+      "last_updated": "2026-03-08T14:00:00.000Z",
+      "created": "2025-11-15T00:00:00.000Z",
+      "stats": {
+        "recipients": 1620,
+        "delivered": 1604,
+        "opens_unique": 690,
+        "clicks_unique": 42,
+        "unsubscribe_uniques": 8,
+        "bounced": 16,
+        "conversion_value": 1180,
+        "open_rate": 0.4302,
+        "click_rate": 0.0262,
+        "unsub_rate": 0.0050,
+        "bounce_rate": 0.0099
+      },
+      "messages": []
+    },
+    {
+      "id": "URGzF3",
+      "name": "Abandoned Checkout [antidote]",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 4,
+      "last_updated": "2026-02-28T10:00:00.000Z",
+      "created": "2025-08-15T00:00:00.000Z",
+      "stats": {
+        "recipients": 6420,
+        "delivered": 6380,
+        "opens_unique": 3120,
+        "clicks_unique": 240,
+        "unsubscribe_uniques": 10,
+        "bounced": 40,
+        "conversion_value": 14820,
+        "open_rate": 0.489,
+        "click_rate": 0.0376,
+        "unsub_rate": 0.0016,
+        "bounce_rate": 0.0062
+      },
+      "messages": []
+    },
+    {
+      "id": "fix_flow_s_sunset",
+      "name": "Sunset Flow [antidote]",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 0,
+      "last_updated": "2026-04-01T00:00:00.000Z",
+      "created": "2025-06-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 0,
+        "delivered": null,
+        "opens_unique": null,
+        "clicks_unique": null,
+        "unsubscribe_uniques": null,
+        "bounced": null,
+        "conversion_value": null,
+        "open_rate": null,
+        "click_rate": null,
+        "unsub_rate": null,
+        "bounce_rate": null
+      },
+      "messages": []
+    },
+    {
+      "id": "R99Cvg",
+      "name": "Subscription Winback",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 4,
+      "last_updated": "2026-04-02T18:00:00.000Z",
+      "created": "2024-08-01T00:00:00.000Z",
+      "stats": {
+        "recipients": 480,
+        "delivered": 478,
+        "opens_unique": 198,
+        "clicks_unique": 12,
+        "unsubscribe_uniques": 2,
+        "bounced": 2,
+        "conversion_value": 320,
+        "open_rate": 0.4142,
+        "click_rate": 0.0251,
+        "unsub_rate": 0.0042,
+        "bounce_rate": 0.0042
+      },
+      "messages": []
+    },
+    {
+      "id": "RcYt6p",
+      "name": "Day + Night Subscription Upgrades",
+      "status": "Live",
+      "trigger_type": "Metric",
+      "action_count": 4,
+      "last_updated": "2026-01-20T11:00:00.000Z",
+      "created": "2025-04-10T00:00:00.000Z",
+      "stats": {
+        "recipients": 920,
+        "delivered": 916,
+        "opens_unique": 482,
+        "clicks_unique": 38,
+        "unsubscribe_uniques": 2,
+        "bounced": 4,
+        "conversion_value": 2120,
+        "open_rate": 0.5263,
+        "click_rate": 0.0415,
+        "unsub_rate": 0.0022,
+        "bounce_rate": 0.0043
+      },
+      "messages": []
+    }
+  ]
+}

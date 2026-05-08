@@ -7,3 +7,21 @@ private/
 **/.DS_Store
 *.swp
 *.swo
+
+# Lifecycle Command Center
+node_modules/
+dist/
+.astro/
+.cache/
+.vite/
+*.log
+.idea/
+.vscode/
+# Puppeteer download cache (do not commit a Chromium binary)
+.local-chromium/
+
+# data/ IS committed — daily JSON snapshots produce the git history we render
+# in charts and the projects/cleanup queue. Flip the lines below on if the
+# template HTML/PNG bundles outgrow git comfortably.
+# data/**/templates/*.html
+# data/**/templates/*.png

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "brand": "thesis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "segments": [
+    { "id": "fix_seg_t_engaged", "name": "Engaged 30d", "profile_count": 62410, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "opened OR clicked email in last 30d" },
+    { "id": "fix_seg_t_unengaged", "name": "Unengaged 90d (suppress)", "profile_count": 38420, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "no open/click in last 90d AND not transactional" },
+    { "id": "fix_seg_t_active_subs", "name": "Active subscribers", "profile_count": 28940, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "active Shopify subscription status" },
+    { "id": "fix_seg_t_churned_30d", "name": "Churned in last 30d", "profile_count": 1820, "updated": "2026-05-08T12:00:00.000Z", "definition_summary": "subscription cancelled within 30d window" }
+  ]
+}

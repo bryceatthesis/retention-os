@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import KpiTile from '../components/KpiTile.astro';
+import RefillCaveat from '../components/RefillCaveat.astro';
+import { loadAllBrands, type Brand } from '../lib/data';
+import { loadThresholds } from '../lib/thresholds';
+import { computeKpis } from '../lib/kpi';
+import { int, pct } from '../lib/format';
+
+const data = loadAllBrands();
+const thresholds = loadThresholds();
+const kpis = {
+  thesis: computeKpis(data.thesis, thresholds),
+  stasis: computeKpis(data.stasis, thresholds),
+} satisfies Record<Brand, ReturnType<typeof computeKpis>>;
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function clickRateState(brand: Brand): 'good' | 'warn' | 'bad' | 'pending' | 'neutral' {
+  const v = kpis[brand].weightedClickRate30d;
+  if (v == null) return 'pending';
+  if (v >= thresholds.clickRate.benchmark) return 'good';
+  if (v >= thresholds.clickRate.benchmark * 0.85) return 'warn';
+  return 'bad';
+}
+---
+<Base title="Home" active="home">
+  <h1>Lifecycle Command Center</h1>
+  <p class="muted">
+    Daily-scan view of Klaviyo creative performance, deliverability, and project state across Thesis &amp; Stasis.
+    Use the brand toggle in the header to switch views; selection persists across pages.
+  </p>
+
+  {(['thesis', 'stasis'] as Brand[]).map((brand) => {
+    const k = kpis[brand];
+    return (
+      <section class:list={['brand-only', `brand-${brand}`]} data-brand={brand}>
+        <div class="section-title">
+          <h2 style={`text-transform: capitalize;`}>{brand}</h2>
+          <span class="muted">Window: trailing 30d for rates, 7d for volume.</span>
+        </div>
+
+        <div class="kpi-grid">
+          <KpiTile
+            label="Email campaigns sent (7d)"
+            value={int(k.emailCampaigns7d)}
+            detail={`Sparkline: 90d daily count`}
+            href={`${baseUrl}/creative/campaigns`}
+            sparkline={k.emailCampaignsSparkline90d}
+          />
+          <KpiTile
+            label="SMS campaigns sent (7d)"
+            value={int(k.smsCampaigns7d)}
+            detail={`Sparkline: 90d daily count`}
+            href={`${baseUrl}/creative/campaigns`}
+            sparkline={k.smsCampaignsSparkline90d}
+          />
+          <KpiTile
+            label="Weighted email click rate (30d)"
+            value={pct(k.weightedClickRate30d, 2)}
+            detail={`Benchmark ${pct(thresholds.clickRate.benchmark, 1)} · 90d baseline ${pct(k.weightedClickRate90dBaseline, 2)}`}
+            state={clickRateState(brand)}
+            href={`${baseUrl}/creative/campaigns`}
+          />
+          <KpiTile
+            label="Email bounce rate (30d)"
+            value={pct(k.bounceRate30d, 2)}
+            detail={`Threshold ${pct(thresholds.bounceRate.warn, 1)}`}
+            state={k.bounceStatus === 'unknown' ? 'pending' : k.bounceStatus === 'healthy' ? 'good' : k.bounceStatus}
+            href={`${baseUrl}/deliverability`}
+          />
+          <KpiTile
+            label="Email unsub rate (30d)"
+            value={pct(k.unsubRate30d, 2)}
+            detail={`Target ${pct(thresholds.unsubRate.warn, 1)}`}
+            state={k.unsubStatus === 'unknown' ? 'pending' : k.unsubStatus === 'healthy' ? 'good' : k.unsubStatus}
+            href={`${baseUrl}/deliverability`}
+          />
+          <KpiTile
+            label="Net list growth (30d)"
+            value={int(k.netListGrowth30d)}
+            detail={`+${int(k.listGrowthSubscribed30d)} subscribed · −${int(k.listGrowthUnsubscribed30d)} unsubscribed`}
+            href={`${baseUrl}/deliverability`}
+          />
+          <KpiTile
+            label="Holdout health"
+            value="Pending"
+            detail="Global holdout not yet implemented — incrementality is not computed from this dashboard."
+            state="pending"
+          />
+        </div>
+      </section>
+    );
+  })}
+
+  <RefillCaveat />
+  <p class="muted" style="font-size: 12px;">
+    KPI tiles reflect this brand's last refresh — see the credential strip in the header.
+    Threshold sources: <code>knowledge/metrics-definitions.md</code>.
+  </p>
+</Base>
+
+<script>
+  // Sparkline rendering — per-tile canvas, no library overhead beyond the
+  // chart.js bundle the chart-heavy pages already pull in.
+  import { Chart, registerables } from 'chart.js';
+  Chart.register(...registerables);
+
+  for (const canvas of document.querySelectorAll<HTMLCanvasElement>('canvas[data-spark]')) {
+    const raw = canvas.dataset.spark;
+    if (!raw) continue;
+    let series: Array<{ date: string; value: number }>;
+    try {
+      series = JSON.parse(raw);
+    } catch (err) {
+      console.warn('[sparkline] could not parse', err);
+      continue;
+    }
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: series.map((p) => p.date),
+        datasets: [{
+          data: series.map((p) => p.value),
+          borderColor: 'rgb(29, 78, 216)',
+          backgroundColor: 'rgba(29, 78, 216, 0.08)',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          tension: 0.3,
+          fill: true,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: { x: { display: false }, y: { display: false } },
+      },
+    });
+  }
+</script>

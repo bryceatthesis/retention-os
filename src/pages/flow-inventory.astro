@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import DriftFlag from '../components/DriftFlag.astro';
+import { loadAllBrands, type Brand } from '../lib/data';
+import { buildMergedInventory } from '../lib/flow-inventory-merge';
+import { isoToDate, int, pct, relativeDays } from '../lib/format';
+
+const data = loadAllBrands();
+const merged: Record<Brand, ReturnType<typeof buildMergedInventory>> = {
+  thesis: buildMergedInventory('thesis', data.thesis),
+  stasis: buildMergedInventory('stasis', data.stasis),
+};
+
+function flowsForFilter(brand: Brand): ReadonlyArray<{ status: string; lastUpdated: string | null; hasDrift: boolean }> {
+  const inv = merged[brand];
+  return [
+    ...inv.sections.flatMap((s) => s.flows),
+    ...inv.uncategorized,
+  ].map((f) => ({ status: f.api.status, lastUpdated: f.api.last_updated, hasDrift: f.drift !== null }));
+}
+
+const driftCount = (['thesis', 'stasis'] as Brand[]).reduce(
+  (n, b) => n + flowsForFilter(b).filter((f) => f.hasDrift).length,
+  0,
+);
+---
+<Base title="Flow Inventory" active="flow-inventory">
+  <div class="section-title">
+    <h1>Flow Inventory</h1>
+    <span class="muted">{driftCount > 0 ? `${driftCount} drift${driftCount === 1 ? '' : 's'} detected` : 'No drift between markdown and API'}</span>
+  </div>
+
+  <p class="muted">
+    The Klaviyo API is the spine. Notes and categories come from <code>knowledge/flow-inventory.md</code>.
+    When the markdown's stated status disagrees with the API, you'll see a drift pill — click "edit md" to fix it in GitHub.
+  </p>
+
+  <div class="filters">
+    <select id="status-filter">
+      <option value="">All statuses</option>
+      <option value="Live">Live only</option>
+      <option value="Manual">Manual</option>
+      <option value="Draft">Draft</option>
+      <option value="Draining">Draining</option>
+    </select>
+    <label style="font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
+      <input type="checkbox" id="drift-only" /> Drift only
+    </label>
+    <label style="font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
+      <input type="checkbox" id="recent-only" /> Edited in last 14d
+    </label>
+    <input type="search" id="search" placeholder="Filter by flow name or id…" />
+  </div>
+
+  {(['thesis', 'stasis'] as Brand[]).map((brand) => {
+    const inv = merged[brand];
+    const broken = inv.sections.flatMap((s) => s.flows).concat(inv.uncategorized).filter(
+      (f) => f.api.status === 'Live' && f.api.action_count === 0,
+    );
+    return (
+      <section class:list={['brand-only', `brand-${brand}`]} data-brand={brand} id={brand} style="margin-top: 24px;">
+        <div class="section-title">
+          <h2 style={`text-transform: capitalize;`}>{brand}</h2>
+          <span class="muted">{inv.sections.reduce((n, s) => n + s.flows.length, 0) + inv.uncategorized.length} flows in API</span>
+        </div>
+
+        {broken.length > 0 && (
+          <div class="alert-banner">
+            <h3>⚠ Pinned: live flows with 0 actions ({broken.length})</h3>
+            <ul style="margin: 4px 0 0 16px;">
+              {broken.map((b) => (
+                <li>
+                  <strong>{b.api.name}</strong> (id <code>{b.api.id}</code>) — see
+                  <code>knowledge/klaviyo-renewal-context.md</code> and
+                  <code>experiments/2026-Q2/profile-hygiene-audit-2026-05-07.md</code>.
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {inv.sections.map((section) => (
+          <div class="panel" style="margin-bottom: 16px;">
+            <h3 style="margin: 0 0 8px 0;">{section.category}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Flow</th>
+                  <th>Status</th>
+                  <th>Trigger</th>
+                  <th style="text-align:right">Actions</th>
+                  <th>Last edited</th>
+                  <th style="text-align:right">Recipients (30d)</th>
+                  <th style="text-align:right">Click (30d)</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {section.flows.map((f) => (
+                  <tr
+                    class="flow-row"
+                    data-status={f.api.status}
+                    data-drift={f.drift ? '1' : '0'}
+                    data-updated={f.api.last_updated ?? ''}
+                    data-search={`${f.api.name} ${f.api.id}`.toLowerCase()}
+                  >
+                    <td>
+                      <strong>{f.api.name}</strong>
+                      <div class="muted" style="font-size: 11px;">id <code>{f.api.id}</code></div>
+                    </td>
+                    <td>
+                      {f.api.status}
+                      {f.drift && <DriftFlag drift={f.drift} brand={brand} />}
+                    </td>
+                    <td>{f.api.trigger_type ?? '—'}</td>
+                    <td style="text-align:right">{f.api.action_count}</td>
+                    <td>
+                      <div title={f.api.last_updated ?? ''}>{isoToDate(f.api.last_updated)}</div>
+                      <div class="muted" style="font-size: 11px;">{relativeDays(f.api.last_updated)}</div>
+                    </td>
+                    <td style="text-align:right">{int(f.api.stats.recipients)}</td>
+                    <td style="text-align:right">{pct(f.api.stats.click_rate, 2)}</td>
+                    <td style="font-size: 12px;">{f.markdown?.notes ?? <span class="muted">—</span>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+
+        {inv.uncategorized.length > 0 && (
+          <div class="panel" style="margin-bottom: 16px;">
+            <h3 style="margin: 0 0 8px 0;">Uncategorized <span class="muted" style="font-weight: 400; font-size: 12px;">— present in API, not yet in <code>knowledge/flow-inventory.md</code></span></h3>
+            <table>
+              <thead>
+                <tr><th>Flow</th><th>Status</th><th style="text-align:right">Actions</th><th>Last edited</th></tr>
+              </thead>
+              <tbody>
+                {inv.uncategorized.map((f) => (
+                  <tr
+                    class="flow-row"
+                    data-status={f.api.status}
+                    data-drift="0"
+                    data-updated={f.api.last_updated ?? ''}
+                    data-search={`${f.api.name} ${f.api.id}`.toLowerCase()}
+                  >
+                    <td><strong>{f.api.name}</strong> <span class="muted">id <code>{f.api.id}</code></span></td>
+                    <td>{f.api.status}</td>
+                    <td style="text-align:right">{f.api.action_count}</td>
+                    <td>{isoToDate(f.api.last_updated)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {inv.markdownOrphans.length > 0 && (
+          <div class="panel" style="margin-bottom: 16px; border-color: #fcd34d;">
+            <h3 style="margin: 0 0 8px 0; color: var(--warn);">⚠ Markdown rows missing from API</h3>
+            <p class="muted" style="font-size: 13px; margin: 0 0 8px;">These IDs appear in <code>knowledge/flow-inventory.md</code> but not in Klaviyo — likely deleted or typo'd.</p>
+            <ul>
+              {inv.markdownOrphans.map((o) => (
+                <li><strong>{o.flowName}</strong> — id <code>{o.flowId}</code> (category: {o.category})</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
+    );
+  })}
+</Base>
+
+<script>
+  const statusFilter = document.getElementById('status-filter') as HTMLSelectElement | null;
+  const driftOnly = document.getElementById('drift-only') as HTMLInputElement | null;
+  const recentOnly = document.getElementById('recent-only') as HTMLInputElement | null;
+  const search = document.getElementById('search') as HTMLInputElement | null;
+
+  const fourteenDaysAgo = Date.now() - 14 * 24 * 60 * 60 * 1000;
+
+  function applyFilters() {
+    const st = statusFilter?.value ?? '';
+    const drift = driftOnly?.checked ?? false;
+    const recent = recentOnly?.checked ?? false;
+    const s = (search?.value ?? '').toLowerCase().trim();
+    document.querySelectorAll<HTMLTableRowElement>('tr.flow-row').forEach((tr) => {
+      const matchStatus = !st || tr.dataset.status === st;
+      const matchDrift = !drift || tr.dataset.drift === '1';
+      const matchSearch = !s || tr.dataset.search?.includes(s);
+      const updated = tr.dataset.updated ? new Date(tr.dataset.updated).getTime() : 0;
+      const matchRecent = !recent || (updated > 0 && updated >= fourteenDaysAgo);
+      tr.style.display = matchStatus && matchDrift && matchSearch && matchRecent ? '' : 'none';
+    });
+  }
+
+  statusFilter?.addEventListener('change', applyFilters);
+  driftOnly?.addEventListener('change', applyFilters);
+  recentOnly?.addEventListener('change', applyFilters);
+  search?.addEventListener('input', applyFilters);
+  document.addEventListener('lcc:brand-change', applyFilters);
+  applyFilters();
+</script>

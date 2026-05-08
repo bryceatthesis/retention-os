@@ -1,0 +1,33 @@
+---
+import type { SparkPoint } from '../lib/kpi';
+
+interface Props {
+  label: string;
+  value: string;
+  detail?: string | null;
+  href?: string | null;
+  state?: 'good' | 'warn' | 'bad' | 'pending' | 'neutral';
+  sparkline?: SparkPoint[] | null;
+  brand?: 'thesis' | 'stasis' | null;
+}
+
+const { label, value, detail, href, state = 'neutral', sparkline, brand } = Astro.props;
+
+const brandAttr = brand ?? null;
+const stateClass = state === 'neutral' ? '' : `kpi-tile--${state}`;
+const sparkId = sparkline && sparkline.length > 0 ? `spark-${Math.random().toString(36).slice(2, 9)}` : null;
+const sparkData = sparkId ? JSON.stringify(sparkline) : null;
+const Tag = href ? 'a' : 'div';
+---
+<Tag
+  class:list={['kpi-tile', stateClass]}
+  href={href ?? undefined}
+  data-brand={brandAttr ?? undefined}
+>
+  <span class="kpi-tile__label">{label}</span>
+  <span class="kpi-tile__value">{value}</span>
+  {detail && <span class="kpi-tile__detail">{detail}</span>}
+  {sparkId && (
+    <canvas class="kpi-tile__sparkline" id={sparkId} data-spark={sparkData}></canvas>
+  )}
+</Tag>

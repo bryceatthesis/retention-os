@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "brand": "stasis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "window": { "start": "2026-02-07T13:00:00.000Z", "end": "2026-05-08T13:00:00.000Z" },
+  "conversion_metric_id": "fixture_placed_order_stasis",
+  "campaigns": [
+    {
+      "id": "fix_camp_s_001",
+      "name": "[Stasis] May newsletter — sleep deep dive",
+      "channel": "email",
+      "status": "Sent",
+      "send_time": "2026-05-04T16:00:00.000Z",
+      "subject": "Three ways to use Stasis in spring",
+      "preheader": "Routine tweaks for warmer nights.",
+      "template_id": "fix_tmpl_s_001",
+      "template_html_path": null,
+      "template_thumb_path": null,
+      "stats": {
+        "recipients": 14820,
+        "delivered": 14580,
+        "opens_unique": 6280,
+        "clicks_unique": 232,
+        "unsubscribe_uniques": 38,
+        "bounced": 240,
+        "conversion_value": 8420,
+        "open_rate": 0.4307,
+        "click_rate": 0.0159,
+        "unsub_rate": 0.0026,
+        "bounce_rate": 0.0162
+      }
+    },
+    {
+      "id": "fix_camp_s_002",
+      "name": "[Stasis] Kids — backorder update",
+      "channel": "email",
+      "status": "Sent",
+      "send_time": "2026-04-22T16:00:00.000Z",
+      "subject": "An update on your Kids subscription",
+      "preheader": "Quick note on capsule timing.",
+      "template_id": "fix_tmpl_s_002",
+      "template_html_path": null,
+      "template_thumb_path": null,
+      "stats": {
+        "recipients": 4280,
+        "delivered": 4220,
+        "opens_unique": 2410,
+        "clicks_unique": 88,
+        "unsubscribe_uniques": 12,
+        "bounced": 60,
+        "conversion_value": 1240,
+        "open_rate": 0.5711,
+        "click_rate": 0.0209,
+        "unsub_rate": 0.0028,
+        "bounce_rate": 0.0140
+      }
+    },
+    {
+      "id": "fix_camp_s_003",
+      "name": "[Stasis] SMS — refill 7 days out",
+      "channel": "sms",
+      "status": "Sent",
+      "send_time": "2026-04-15T18:30:00.000Z",
+      "subject": null,
+      "preheader": null,
+      "template_id": null,
+      "template_html_path": null,
+      "template_thumb_path": null,
+      "stats": {
+        "recipients": 3420,
+        "delivered": 3392,
+        "opens_unique": null,
+        "clicks_unique": 168,
+        "unsubscribe_uniques": 11,
+        "bounced": 28,
+        "conversion_value": 2120,
+        "open_rate": null,
+        "click_rate": 0.0495,
+        "unsub_rate": 0.0032,
+        "bounce_rate": 0.0082
+      }
+    },
+    {
+      "id": "fix_camp_s_004",
+      "name": "[Stasis] VIP upgrade prompt — Day + Night",
+      "channel": "email",
+      "status": "Sent",
+      "send_time": "2026-03-30T16:00:00.000Z",
+      "subject": "An upgrade we built for VIPs",
+      "preheader": "Day + Night, side by side.",
+      "template_id": "fix_tmpl_s_003",
+      "template_html_path": null,
+      "template_thumb_path": null,
+      "stats": {
+        "recipients": 1820,
+        "delivered": 1810,
+        "opens_unique": 980,
+        "clicks_unique": 62,
+        "unsubscribe_uniques": 4,
+        "bounced": 10,
+        "conversion_value": 3420,
+        "open_rate": 0.5414,
+        "click_rate": 0.0343,
+        "unsub_rate": 0.0022,
+        "bounce_rate": 0.0055
+      }
+    }
+  ]
+}

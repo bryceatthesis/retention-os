@@ -1,0 +1,42 @@
+---
+import type { PreflightMeta, SourceHealth } from '../../scripts/preflight';
+
+interface Props {
+  meta: PreflightMeta;
+}
+const { meta } = Astro.props;
+
+function badgeFor(label: string, h: SourceHealth) {
+  const dot =
+    h.status === 'verified'
+      ? 'health-dot--verified'
+      : h.status === 'pending'
+        ? 'health-dot--pending'
+        : 'health-dot--failed';
+  const symbol = h.status === 'verified' ? '✓' : h.status === 'pending' ? '⚠' : '✗';
+  const title = `${label}: ${h.status}${h.org_id ? ` · org ${h.org_id}` : ''}${h.error ? ` · ${h.error}` : ''}`;
+  return { dot, symbol, title };
+}
+
+const sources: Array<{ label: string; health: SourceHealth }> = [
+  { label: 'Klaviyo · Thesis', health: meta.thesis },
+  { label: 'Klaviyo · Stasis', health: meta.stasis },
+  { label: 'ReCharge · Thesis', health: meta.recharge_thesis },
+  { label: 'ReCharge · Stasis', health: meta.recharge_stasis },
+];
+---
+<div class="refresh-header" aria-label="Source freshness and credential health">
+  <span class="refresh-header__item" title={meta.verified_at}>
+    Last refresh: <time datetime={meta.verified_at}>{new Date(meta.verified_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</time>
+  </span>
+  <span class="refresh-header__item">Klaviyo revision {meta.klaviyo_revision}</span>
+  {sources.map(({ label, health }) => {
+    const b = badgeFor(label, health);
+    return (
+      <span class="refresh-header__item" title={b.title}>
+        <span class:list={['health-dot', b.dot]} aria-hidden="true"></span>
+        {b.symbol} {label}
+      </span>
+    );
+  })}
+</div>

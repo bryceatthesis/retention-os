@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "brand": "stasis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "window": {
+    "start": "2026-02-08T13:00:00.000Z",
+    "end": "2026-05-08T13:00:00.000Z"
+  },
+  "daily": [
+    {
+      "date": "2026-02-08T13:00:00.000Z",
+      "delivered": 9581,
+      "bounced": 36,
+      "spam_complaints": 5,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-02-09T13:00:00.000Z",
+      "delivered": 13758,
+      "bounced": 48,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-02-10T13:00:00.000Z",
+      "delivered": 13832,
+      "bounced": 46,
+      "spam_complaints": 7,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-02-11T13:00:00.000Z",
+      "delivered": 13909,
+      "bounced": 43,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-02-12T13:00:00.000Z",
+      "delivered": 13986,
+      "bounced": 40,
+      "spam_complaints": 6,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-02-13T13:00:00.000Z",
+      "delivered": 14064,
+      "bounced": 52,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-02-14T13:00:00.000Z",
+      "delivered": 9899,
+      "bounced": 35,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-02-15T13:00:00.000Z",
+      "delivered": 9951,
+      "bounced": 33,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-02-16T13:00:00.000Z",
+      "delivered": 14288,
+      "bounced": 44,
+      "spam_complaints": 8,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-02-17T13:00:00.000Z",
+      "delivered": 14357,
+      "bounced": 41,
+      "spam_complaints": 7,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-02-18T13:00:00.000Z",
+      "delivered": 14422,
+      "bounced": 53,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-02-19T13:00:00.000Z",
+      "delivered": 14481,
+      "bounced": 51,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-02-20T13:00:00.000Z",
+      "delivered": 14535,
+      "bounced": 48,
+      "spam_complaints": 6,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-02-21T13:00:00.000Z",
+      "delivered": 10207,
+      "bounced": 32,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-02-22T13:00:00.000Z",
+      "delivered": 10235,
+      "bounced": 30,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-02-23T13:00:00.000Z",
+      "delivered": 14653,
+      "bounced": 54,
+      "spam_complaints": 8,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-02-24T13:00:00.000Z",
+      "delivered": 14677,
+      "bounced": 51,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-02-25T13:00:00.000Z",
+      "delivered": 14693,
+      "bounced": 48,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-02-26T13:00:00.000Z",
+      "delivered": 14700,
+      "bounced": 45,
+      "spam_complaints": 7,
+      "unsubscribes": 35
+    },
+    {
+      "date": "2026-02-27T13:00:00.000Z",
+      "delivered": 14698,
+      "bounced": 42,
+      "spam_complaints": 6,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-02-28T13:00:00.000Z",
+      "delivered": 10281,
+      "bounced": 38,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-03-01T13:00:00.000Z",
+      "delivered": 10268,
+      "bounced": 36,
+      "spam_complaints": 6,
+      "unsubscribes": 24
+    },
+    {
+      "date": "2026-03-02T13:00:00.000Z",
+      "delivered": 14642,
+      "bounced": 48,
+      "spam_complaints": 8,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-03-03T13:00:00.000Z",
+      "delivered": 14607,
+      "bounced": 45,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-03-04T13:00:00.000Z",
+      "delivered": 14565,
+      "bounced": 42,
+      "spam_complaints": 7,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-03-05T13:00:00.000Z",
+      "delivered": 14516,
+      "bounced": 54,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-03-06T13:00:00.000Z",
+      "delivered": 14460,
+      "bounced": 51,
+      "spam_complaints": 6,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-03-07T13:00:00.000Z",
+      "delivered": 10079,
+      "bounced": 33,
+      "spam_complaints": 6,
+      "unsubscribes": 24
+    },
+    {
+      "date": "2026-03-08T13:00:00.000Z",
+      "delivered": 10033,
+      "bounced": 31,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-03-09T13:00:00.000Z",
+      "delivered": 14262,
+      "bounced": 41,
+      "spam_complaints": 8,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-03-10T13:00:00.000Z",
+      "delivered": 14188,
+      "bounced": 53,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-03-11T13:00:00.000Z",
+      "delivered": 14112,
+      "bounced": 49,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-03-12T13:00:00.000Z",
+      "delivered": 14035,
+      "bounced": 46,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-03-13T13:00:00.000Z",
+      "delivered": 13957,
+      "bounced": 43,
+      "spam_complaints": 6,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-03-14T13:00:00.000Z",
+      "delivered": 9716,
+      "bounced": 28,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-03-15T13:00:00.000Z",
+      "delivered": 9663,
+      "bounced": 36,
+      "spam_complaints": 6,
+      "unsubscribes": 21
+    },
+    {
+      "date": "2026-03-16T13:00:00.000Z",
+      "delivered": 13731,
+      "bounced": 48,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-03-17T13:00:00.000Z",
+      "delivered": 13661,
+      "bounced": 45,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-03-18T13:00:00.000Z",
+      "delivered": 13595,
+      "bounced": 42,
+      "spam_complaints": 7,
+      "unsubscribes": 29
+    },
+    {
+      "date": "2026-03-19T13:00:00.000Z",
+      "delivered": 13534,
+      "bounced": 39,
+      "spam_complaints": 6,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-03-20T13:00:00.000Z",
+      "delivered": 13479,
+      "bounced": 50,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-03-21T13:00:00.000Z",
+      "delivered": 9401,
+      "bounced": 33,
+      "spam_complaints": 6,
+      "unsubscribes": 20
+    },
+    {
+      "date": "2026-03-22T13:00:00.000Z",
+      "delivered": 9372,
+      "bounced": 31,
+      "spam_complaints": 5,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-03-23T13:00:00.000Z",
+      "delivered": 13355,
+      "bounced": 41,
+      "spam_complaints": 7,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-03-24T13:00:00.000Z",
+      "delivered": 13329,
+      "bounced": 39,
+      "spam_complaints": 7,
+      "unsubscribes": 29
+    },
+    {
+      "date": "2026-03-25T13:00:00.000Z",
+      "delivered": 13311,
+      "bounced": 49,
+      "spam_complaints": 6,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-03-26T13:00:00.000Z",
+      "delivered": 13301,
+      "bounced": 47,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-03-27T13:00:00.000Z",
+      "delivered": 13301,
+      "bounced": 44,
+      "spam_complaints": 6,
+      "unsubscribes": 29
+    },
+    {
+      "date": "2026-03-28T13:00:00.000Z",
+      "delivered": 9316,
+      "bounced": 29,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-03-29T13:00:00.000Z",
+      "delivered": 9327,
+      "bounced": 27,
+      "spam_complaints": 5,
+      "unsubscribes": 21
+    },
+    {
+      "date": "2026-03-30T13:00:00.000Z",
+      "delivered": 13350,
+      "bounced": 49,
+      "spam_complaints": 7,
+      "unsubscribes": 29
+    },
+    {
+      "date": "2026-03-31T13:00:00.000Z",
+      "delivered": 13382,
+      "bounced": 47,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-04-01T13:00:00.000Z",
+      "delivered": 13423,
+      "bounced": 44,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-04-02T13:00:00.000Z",
+      "delivered": 13470,
+      "bounced": 42,
+      "spam_complaints": 6,
+      "unsubscribes": 29
+    },
+    {
+      "date": "2026-04-03T13:00:00.000Z",
+      "delivered": 13524,
+      "bounced": 39,
+      "spam_complaints": 6,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-04T13:00:00.000Z",
+      "delivered": 9509,
+      "bounced": 35,
+      "spam_complaints": 6,
+      "unsubscribes": 21
+    },
+    {
+      "date": "2026-04-05T13:00:00.000Z",
+      "delivered": 9554,
+      "bounced": 33,
+      "spam_complaints": 5,
+      "unsubscribes": 21
+    },
+    {
+      "date": "2026-04-06T13:00:00.000Z",
+      "delivered": 13718,
+      "bounced": 45,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-07T13:00:00.000Z",
+      "delivered": 13791,
+      "bounced": 43,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-04-08T13:00:00.000Z",
+      "delivered": 13867,
+      "bounced": 40,
+      "spam_complaints": 7,
+      "unsubscribes": 30
+    },
+    {
+      "date": "2026-04-09T13:00:00.000Z",
+      "delivered": 13944,
+      "bounced": 52,
+      "spam_complaints": 6,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-04-10T13:00:00.000Z",
+      "delivered": 14021,
+      "bounced": 49,
+      "spam_complaints": 6,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-11T13:00:00.000Z",
+      "delivered": 9869,
+      "bounced": 33,
+      "spam_complaints": 6,
+      "unsubscribes": 21
+    },
+    {
+      "date": "2026-04-12T13:00:00.000Z",
+      "delivered": 9923,
+      "bounced": 31,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-04-13T13:00:00.000Z",
+      "delivered": 14249,
+      "bounced": 41,
+      "spam_complaints": 8,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-14T13:00:00.000Z",
+      "delivered": 14320,
+      "bounced": 53,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-04-15T13:00:00.000Z",
+      "delivered": 14387,
+      "bounced": 50,
+      "spam_complaints": 7,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-04-16T13:00:00.000Z",
+      "delivered": 14449,
+      "bounced": 48,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-04-17T13:00:00.000Z",
+      "delivered": 14506,
+      "bounced": 45,
+      "spam_complaints": 6,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-04-18T13:00:00.000Z",
+      "delivered": 10190,
+      "bounced": 29,
+      "spam_complaints": 6,
+      "unsubscribes": 24
+    },
+    {
+      "date": "2026-04-19T13:00:00.000Z",
+      "delivered": 10220,
+      "bounced": 38,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-04-20T13:00:00.000Z",
+      "delivered": 14637,
+      "bounced": 51,
+      "spam_complaints": 8,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-21T13:00:00.000Z",
+      "delivered": 14665,
+      "bounced": 48,
+      "spam_complaints": 7,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-04-22T13:00:00.000Z",
+      "delivered": 14685,
+      "bounced": 45,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-04-23T13:00:00.000Z",
+      "delivered": 14697,
+      "bounced": 42,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-24T13:00:00.000Z",
+      "delivered": 14700,
+      "bounced": 54,
+      "spam_complaints": 6,
+      "unsubscribes": 35
+    },
+    {
+      "date": "2026-04-25T13:00:00.000Z",
+      "delivered": 10286,
+      "bounced": 36,
+      "spam_complaints": 6,
+      "unsubscribes": 23
+    },
+    {
+      "date": "2026-04-26T13:00:00.000Z",
+      "delivered": 10276,
+      "bounced": 34,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-04-27T13:00:00.000Z",
+      "delivered": 14658,
+      "bounced": 45,
+      "spam_complaints": 8,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-04-28T13:00:00.000Z",
+      "delivered": 14627,
+      "bounced": 42,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-04-29T13:00:00.000Z",
+      "delivered": 14589,
+      "bounced": 54,
+      "spam_complaints": 7,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-04-30T13:00:00.000Z",
+      "delivered": 14543,
+      "bounced": 51,
+      "spam_complaints": 7,
+      "unsubscribes": 34
+    },
+    {
+      "date": "2026-05-01T13:00:00.000Z",
+      "delivered": 14491,
+      "bounced": 48,
+      "spam_complaints": 6,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-05-02T13:00:00.000Z",
+      "delivered": 10103,
+      "bounced": 31,
+      "spam_complaints": 6,
+      "unsubscribes": 22
+    },
+    {
+      "date": "2026-05-03T13:00:00.000Z",
+      "delivered": 10058,
+      "bounced": 29,
+      "spam_complaints": 6,
+      "unsubscribes": 24
+    },
+    {
+      "date": "2026-05-04T13:00:00.000Z",
+      "delivered": 14301,
+      "bounced": 53,
+      "spam_complaints": 8,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-05-05T13:00:00.000Z",
+      "delivered": 14229,
+      "bounced": 50,
+      "spam_complaints": 7,
+      "unsubscribes": 31
+    },
+    {
+      "date": "2026-05-06T13:00:00.000Z",
+      "delivered": 14154,
+      "bounced": 47,
+      "spam_complaints": 7,
+      "unsubscribes": 33
+    },
+    {
+      "date": "2026-05-07T13:00:00.000Z",
+      "delivered": 14078,
+      "bounced": 44,
+      "spam_complaints": 6,
+      "unsubscribes": 32
+    },
+    {
+      "date": "2026-05-08T13:00:00.000Z",
+      "delivered": 14000,
+      "bounced": 40,
+      "spam_complaints": 6,
+      "unsubscribes": 30
+    }
+  ],
+  "totals": {
+    "bounce_rate": 0.003289,
+    "spam_complaint_rate": 0.0005,
+    "unsub_rate": 0.002257,
+    "list_growth_net": 940,
+    "list_growth_subscribed": 2210,
+    "list_growth_unsubscribed": 1270
+  },
+  "unsub_metric": {
+    "id": "fixture_unsub_metric",
+    "name": "Unsubscribed from Email Marketing"
+  }
+}

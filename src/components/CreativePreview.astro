@@ -1,0 +1,56 @@
+---
+interface Props {
+  id: string;
+  subject: string | null;
+  preheader: string | null;
+  channel: 'email' | 'sms' | 'unknown';
+  templateId?: string | null;
+  htmlPath?: string | null;
+  thumbPath?: string | null;
+}
+
+const { id, subject, preheader, channel, htmlPath, thumbPath } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resolvedThumb = thumbPath ? `${baseUrl}/data-assets/${thumbPath}` : null;
+const resolvedHtml = htmlPath ? `${baseUrl}/data-assets/${htmlPath}` : null;
+---
+{channel === 'sms' ? (
+  <div class="creative-preview">
+    <div class="creative-preview__thumb" aria-hidden="true">SMS</div>
+    <div class="creative-preview__text">
+      <div class="creative-preview__subject">SMS body not yet rendered</div>
+      <div class="creative-preview__preheader muted">SMS body capture is reserved for v2.</div>
+    </div>
+  </div>
+) : (
+  <>
+    <div class="creative-preview">
+      <button
+        type="button"
+        class="creative-preview__thumb"
+        data-open-creative={id}
+        aria-label="Open full email preview"
+        disabled={!resolvedHtml}
+      >
+        {resolvedThumb ? <img src={resolvedThumb} alt="" loading="lazy" /> : 'no preview'}
+      </button>
+      <div class="creative-preview__text">
+        <div class="creative-preview__subject">{subject ?? <span class="muted">no subject</span>}</div>
+        <div class="creative-preview__preheader">{preheader ?? <span class="muted">no preheader</span>}</div>
+      </div>
+    </div>
+    {resolvedHtml && (
+      <div class="modal-backdrop" id={`creative-modal-${id}`} role="dialog" aria-modal="true">
+        <div class="modal">
+          <div class="modal__header">
+            <strong>{subject ?? '(no subject)'}</strong>
+            <button type="button" class="modal__close" aria-label="Close">×</button>
+          </div>
+          <div class="modal__body">
+            <iframe src={resolvedHtml} sandbox="allow-same-origin" title="Email preview"></iframe>
+          </div>
+        </div>
+      </div>
+    )}
+  </>
+)}

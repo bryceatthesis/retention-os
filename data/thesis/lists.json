@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "brand": "thesis",
+  "fetched_at": "2026-05-08T13:00:00.000Z",
+  "lists": [
+    { "id": "fix_list_t_marketing", "name": "Marketing — All Subscribers", "profile_count": 184320, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_t_quiz", "name": "Quiz Leads", "profile_count": 41280, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_t_sms", "name": "SMS Subscribers", "profile_count": 28110, "updated": "2026-05-08T12:00:00.000Z" },
+    { "id": "fix_list_t_vip", "name": "VIP — 12+ months", "profile_count": 6420, "updated": "2026-05-07T12:00:00.000Z" }
+  ]
+}

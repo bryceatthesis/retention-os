@@ -1,0 +1,33 @@
+{
+  "name": "retention-os-lcc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Lifecycle Command Center — static dashboard for Thesis & Stasis Klaviyo performance.",
+  "scripts": {
+    "dev": "tsx scripts/sync-public-assets.ts && astro dev",
+    "start": "astro dev",
+    "build": "tsx scripts/sync-public-assets.ts && astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "fetch:data": "tsx scripts/build-data.ts",
+    "fetch:preflight": "tsx scripts/preflight.ts",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.1.1",
+    "chart.js": "^4.4.7",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "dotenv": "^16.4.7",
+    "puppeteer": "^23.11.1",
+    "tsx": "^4.19.2"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}
