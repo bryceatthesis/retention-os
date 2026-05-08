@@ -1,9 +1,9 @@
 ---
-import Base from '../layouts/Base.astro';
-import { loadAllBrands, type Brand } from '../lib/data';
-import { buildMergedInventory } from '../lib/flow-inventory-merge';
-import { loadExperiments } from '../lib/experiments';
-import { isoToDate, relativeDays } from '../lib/format';
+import Base from '../../layouts/Base.astro';
+import { loadAllBrands, type Brand } from '../../lib/data';
+import { buildMergedInventory } from '../../lib/flow-inventory-merge';
+import { loadExperiments } from '../../lib/experiments';
+import { isoToDate, relativeDays } from '../../lib/format';
 
 const data = loadAllBrands();
 const merged: Record<Brand, ReturnType<typeof buildMergedInventory>> = {
@@ -20,7 +20,7 @@ interface CleanupItem {
   link?: string;
 }
 
-const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lifecycle-command-center`;
 const cleanup: CleanupItem[] = [];
 
 for (const brand of ['thesis', 'stasis'] as Brand[]) {

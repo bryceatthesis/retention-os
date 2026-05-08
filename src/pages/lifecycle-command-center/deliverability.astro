@@ -1,8 +1,8 @@
 ---
-import Base from '../layouts/Base.astro';
-import { loadAllBrands, type Brand } from '../lib/data';
-import { loadThresholds } from '../lib/thresholds';
-import { isoToDate, int, pct } from '../lib/format';
+import Base from '../../layouts/Base.astro';
+import { loadAllBrands, type Brand } from '../../lib/data';
+import { loadThresholds } from '../../lib/thresholds';
+import { isoToDate, int, pct } from '../../lib/format';
 
 const data = loadAllBrands();
 const thresholds = loadThresholds();

@@ -1,9 +1,9 @@
 ---
-import Base from '../../layouts/Base.astro';
-import RefillCaveat from '../../components/RefillCaveat.astro';
-import CreativePreview from '../../components/CreativePreview.astro';
-import { loadAllBrands, type Brand } from '../../lib/data';
-import { isoToDate, isWithin48h, int, pct, usd } from '../../lib/format';
+import Base from '../../../layouts/Base.astro';
+import RefillCaveat from '../../../components/RefillCaveat.astro';
+import CreativePreview from '../../../components/CreativePreview.astro';
+import { loadAllBrands, type Brand } from '../../../lib/data';
+import { isoToDate, isWithin48h, int, pct, usd } from '../../../lib/format';
 
 const data = loadAllBrands();
 const allCampaigns = (['thesis', 'stasis'] as Brand[]).flatMap((brand) =>
