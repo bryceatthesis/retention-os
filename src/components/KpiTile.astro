@@ -28,6 +28,8 @@ const Tag = href ? 'a' : 'div';
   <span class="kpi-tile__value">{value}</span>
   {detail && <span class="kpi-tile__detail">{detail}</span>}
   {sparkId && (
-    <canvas class="kpi-tile__sparkline" id={sparkId} data-spark={sparkData}></canvas>
+    <div class="kpi-tile__sparkline-wrap">
+      <canvas class="kpi-tile__sparkline" id={sparkId} data-spark={sparkData}></canvas>
+    </div>
   )}
 </Tag>

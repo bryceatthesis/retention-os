@@ -35,7 +35,19 @@
   font-size: 12px;
   color: var(--ink-muted);
 }
-.kpi-tile__sparkline { margin-top: 4px; height: 32px; }
+.kpi-tile__sparkline-wrap {
+  margin-top: 4px;
+  height: 36px;
+  position: relative;
+  width: 100%;
+}
+.kpi-tile__sparkline {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
 .kpi-tile--good .kpi-tile__value { color: var(--good); }
 .kpi-tile--warn .kpi-tile__value { color: var(--warn); }
 .kpi-tile--bad .kpi-tile__value { color: var(--bad); }
