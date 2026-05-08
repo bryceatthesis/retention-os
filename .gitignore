@@ -8,6 +8,13 @@ private/
 *.swp
 *.swo
 
+# Claude Code session state — never commit
+.claude/scheduled_tasks.lock
+.claude/worktrees/
+.claude/shell-snapshots/
+.claude/todos/
+.claude/projects/
+
 # Lifecycle Command Center
 node_modules/
 dist/
