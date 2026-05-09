@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-05-08T13:00:00.000Z",
+  "verified_at": "2026-05-09T15:38:34.297Z",
   "klaviyo_revision": "2024-10-15",
   "thesis": {
-    "status": "pending",
-    "org_id": null,
-    "account_name": null,
-    "error": "Seed fixture — run scripts/build-data.ts against live keys to populate.",
-    "checked_at": "2026-05-08T13:00:00.000Z"
+    "status": "verified",
+    "org_id": "QhJaGL",
+    "account_name": "Thesis",
+    "error": null,
+    "checked_at": "2026-05-09T15:38:34.291Z"
   },
   "stasis": {
-    "status": "pending",
-    "org_id": null,
-    "account_name": null,
-    "error": "Seed fixture — run scripts/build-data.ts against live keys to populate.",
-    "checked_at": "2026-05-08T13:00:00.000Z"
+    "status": "verified",
+    "org_id": "YsCgQB",
+    "account_name": "Stasis",
+    "error": null,
+    "checked_at": "2026-05-09T15:38:34.297Z"
   },
   "recharge_thesis": {
     "status": "pending",
     "org_id": null,
     "account_name": null,
     "error": "RECHARGE_API_KEY_THESIS not set. v1 stubs ReCharge until creds land — see knowledge/data-sources.md.",
-    "checked_at": "2026-05-08T13:00:00.000Z"
+    "checked_at": "2026-05-09T15:38:34.092Z"
   },
   "recharge_stasis": {
     "status": "pending",
     "org_id": null,
     "account_name": null,
     "error": "RECHARGE_API_KEY_STASIS not set. v1 stubs ReCharge until creds land — see knowledge/data-sources.md.",
-    "checked_at": "2026-05-08T13:00:00.000Z"
+    "checked_at": "2026-05-09T15:38:34.092Z"
   },
   "errors": []
 }
