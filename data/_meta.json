@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-05-10T16:12:48.101Z",
+  "verified_at": "2026-05-11T19:19:00.222Z",
   "klaviyo_revision": "2024-10-15",
   "thesis": {
     "status": "verified",
     "org_id": "QhJaGL",
     "account_name": "Thesis",
     "error": null,
-    "checked_at": "2026-05-10T16:12:48.101Z"
+    "checked_at": "2026-05-11T19:19:00.222Z"
   },
   "stasis": {
     "status": "verified",
     "org_id": "YsCgQB",
     "account_name": "Stasis",
     "error": null,
-    "checked_at": "2026-05-10T16:12:48.089Z"
+    "checked_at": "2026-05-11T19:19:00.217Z"
   },
   "recharge_thesis": {
     "status": "pending",
     "org_id": null,
     "account_name": null,
     "error": "RECHARGE_API_KEY_THESIS not set. v1 stubs ReCharge until creds land — see knowledge/data-sources.md.",
-    "checked_at": "2026-05-10T16:12:47.909Z"
+    "checked_at": "2026-05-11T19:19:00.057Z"
   },
   "recharge_stasis": {
     "status": "pending",
     "org_id": null,
     "account_name": null,
     "error": "RECHARGE_API_KEY_STASIS not set. v1 stubs ReCharge until creds land — see knowledge/data-sources.md.",
-    "checked_at": "2026-05-10T16:12:47.909Z"
+    "checked_at": "2026-05-11T19:19:00.057Z"
   },
   "errors": []
 }
